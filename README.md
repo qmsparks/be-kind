@@ -19,3 +19,9 @@ https://trello.com/b/5IWgsQfS/be-kind-planning#
 # ERD
 
 <img width="826" alt="Screen Shot 2020-09-17 at 3 32 29 PM" src="https://user-images.githubusercontent.com/65870863/93525053-11f57480-f8fb-11ea-9e33-574644c553bf.png">
+
+
+# Stretch Goals
+- Optional followup nudges for tasks that are more involved or that users know they'll want an extra push toward
+- Send a notice when all stored messages have been sent
+- Ability to opt-in to random kind messages and encouragements
