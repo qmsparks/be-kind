@@ -14,6 +14,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.render('index.ejs');
+})
+
 app.listen(PORT, () => {
     console.log(`Now listening for requests on port ${PORT}`);
 });
