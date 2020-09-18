@@ -12,7 +12,7 @@ router.post('/message', (req, res) => {
 
 // show profile route
 router.get('/profile', (req, res) => {
-    res.send('See profile');
+    res.render('profile');
 })
 
 module.exports = router;
