@@ -1,0 +1,30 @@
+{
+  "name": "be-kind",
+  "version": "1.0.0",
+  "description": "Be Kind to Yourself: The World's first anti-social media app designed to repair your self-esteem.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qmsparks/be-kind.git"
+  },
+  "author": "Thunderhawk and Sparrowhawk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qmsparks/be-kind/issues"
+  },
+  "homepage": "https://github.com/qmsparks/be-kind#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^3.2.0",
+    "cron": "^1.8.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.10.6",
+    "twilio": "^3.49.2"
+  }
+}
