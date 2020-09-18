@@ -16,9 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const thisDate = new Date(info.dateStr);
       const hour = thisDate.getHours();
       const minutes = thisDate.getMinutes();
+      $('input[name="scheduledFor"]').val(info.dateStr);
+      $('#nudge-modal').css('display', 'block');
 
-
-      // console.log(info.dateStr);
+      console.log(info.dateStr);
       // console.log(thisDate);
       // console.log(`${hour}:${minutes}`);
     }
