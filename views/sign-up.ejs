@@ -9,7 +9,17 @@
 
 <body>
     <form action="/sign-up">
-        Message: <textarea name="message" id="" cols="30" rows="10" value=<%=message%>></textarea>
+        <label for="name">What should we call you?</label>
+        <input type="text" name="name" required>
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="email@email.com" required>
+        <label for="phone">Phone Number</label>
+        <input type="string" name="phone" placeholder="e.g. (555) 555-5555">
+        <label for="password">Password</label>
+        <input type="password" name="password">
+        <label for="message">First Message</label>
+        <textarea name="message" id="" cols="30" rows="10"><%= myMessage %> 
+        </textarea></br>
         <input type="submit" value="Test">
     </form>
 </body>
