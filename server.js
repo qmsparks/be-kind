@@ -17,6 +17,15 @@ app.use((req, res, next) => {
     next();
 });
 
+// auth routes
+app.use('/', controllers.auth);
+
+// message routes
+app.use('/messages', controllers.message);
+
+// nudge routes
+app.use('/nudges', controllers.nudge);
+
 app.get('/', (req, res) => {
     res.render('index');
 });
