@@ -9,3 +9,7 @@ ul {
 #nudge-modal {
   display: none;
 }
+
+input[name="scheduledFor"] {
+  display: none;
+}
