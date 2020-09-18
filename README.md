@@ -2,7 +2,8 @@
 
 Be kind is the worlds first anti-social media app designed to restore self-esteem.
 At Be Kind we believe that what we say to ourselves out loud has a profound effect on our behavior.
-For that reason, we've created a site that allows you to send encouraging messages to yourself.
+For that reason, we've created a site that allows users to send kind messages to themselves, 
+while also encouraging them to read them out loud upon receiving them.
 
 # How does it work?
 1. It's easy! Just go to www.bekindtoyourself.com, and type a message to yourself.
