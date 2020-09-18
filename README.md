@@ -14,6 +14,19 @@ while also encouraging them to read them out loud upon receiving them.
 4. A user's page will show a human task list to give themselves alerts to accomplish simple tasks like "making your bed" "Brushing your teeth"
 5. Second, the user will have the option to schedule more messages to themselves from the user page.
 
+# Core Dependencies
+
+express
+mongo db
+mongoose
+path
+method-override
+cron
+express-session
+connect-mongo
+twilio
+bcryptjs
+
 # Trello Page
 https://trello.com/b/5IWgsQfS/be-kind-planning#
 
