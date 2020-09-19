@@ -13,16 +13,6 @@ const EMAIL_PW_MSG = 'Error: Email or password does not match.';
 
 
 // ROUTES
-router.post('/message', (req, res) => {
-    var message = req.body.message;
-    res.render('sign-up', {
-        myMessage: message
-    });
-});
-
-
-
-
 router.post('/sign-up', async (req, res) => {
     try {
         const foundUser = await db.User.exists({ email: req.body.email });
