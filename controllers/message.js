@@ -1,8 +1,17 @@
+// ANCHOR Modules and Constants
+// External Modules
 const express = require('express');
 const router = express.Router();
 
+// Internal Modules
 const db = require('../models');
 
+
+
+
+
+// ANCHOR Routes
+// create and push message to user messages
 router.post('/', async (req, res) => {
     const user = req.session.currentUser;
 
@@ -35,4 +44,9 @@ router.post('/', async (req, res) => {
     }
 });
 
+
+
+
+
+// ANCHOR Exports
 module.exports = router;

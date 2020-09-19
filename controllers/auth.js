@@ -1,17 +1,22 @@
-// EXTERNAL MODULES
+// ANCHOR Modules and constants
+// External Modules
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 
-// INTERNAL MODULES
+// Internal Modules
 const db = require('../models');
 
-// FEEDBACK MESSAGES
+// Feedback Messages
 const ACCOUNT_EXISTS_MSG = 'There is already an account with this email.';
 const EMAIL_PW_MSG = 'Error: Email or password does not match.';
 
 
-// ROUTES
+
+
+
+// ANCHOR ROUTES
+// create account route
 router.post('/sign-up', async (req, res) => {
     try {
         const foundUser = await db.User.exists({ email: req.body.email });
@@ -31,10 +36,14 @@ router.post('/sign-up', async (req, res) => {
 
 
 
+
 // new login route
 router.get('/login', (req, res) => {
     res.render('login');
 });
+
+
+
 
 // create login route
 router.post('/login', async (req, res) => {
@@ -49,7 +58,7 @@ router.post('/login', async (req, res) => {
             name: foundUser.name,
             id: foundUser._id,
         }
-        res.redirect("/")
+        res.redirect("/profile")
     } catch (error) {
         res.send({ message: 'Internal server error' });
     }
@@ -57,7 +66,7 @@ router.post('/login', async (req, res) => {
 
 
 
-
+// delete session route
 router.delete("/logout", async function (req, res) {
     await req.session.destroy();
     res.redirect("/");
@@ -65,7 +74,7 @@ router.delete("/logout", async function (req, res) {
 
 
 
-
+// show profile route
 router.get('/profile', async (req, res) => {
     console.log(req.session.currentUser);
     try {
@@ -79,4 +88,8 @@ router.get('/profile', async (req, res) => {
     }
 })
 
+
+
+
+// ANCHOR exports
 module.exports = router;
