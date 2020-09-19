@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%- include('./partials/nudgeboard.ejs')  %> 
+  <%- include('./partials/nudgeboard.ejs')  %>
   <title>Profile</title>
 </head>
+
 <body>
   <nav>
     <ul>
@@ -14,23 +16,24 @@
       <li><a href="#">Contact</a></li>
     </ul>
   </nav>
-<h1><%= user.name %>'s  Kind Board</h1>
+  <h1><%= user.name %>'s Kind Board</h1>
 
-<div id="messages">This is a div where message things will go</div>
+  <%- include('./partials/messages') %>
 
-<div id="nudgeboard-wrapper">
-  <div id="nudge-modal">
-    <form action="/nudges" method="POST">
-      <input type="text" name="taskName" placeholder="A friendly nudge">
-      <input type="text" name="taskDescription" placeholder="Want to say anything more about it?">
-      <input type="text" name="scheduledFor">
-      <input type="text" name="user" value="<%= user._id %>">
-      <p id="addEvent">Add event</p>
-      <input type="submit" value="Add Nudge">
-    </form>
+  <div id="nudgeboard-wrapper">
+    <div id="nudge-modal">
+      <form action="/nudges" method="POST">
+        <input type="text" name="taskName" placeholder="A friendly nudge">
+        <input type="text" name="taskDescription" placeholder="Want to say anything more about it?">
+        <input type="text" name="scheduledFor">
+        <input type="text" name="user" value="<%= user._id %>">
+        <p id="addEvent">Add event</p>
+        <input type="submit" value="Add Nudge">
+      </form>
+    </div>
+    <div id="calendar"></div>
   </div>
-  <div id="calendar"></div>
-</div>
 
 </body>
+
 </html>

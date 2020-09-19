@@ -11,18 +11,7 @@ const ACCOUNT_EXISTS_MSG = 'There is already an account with this email.';
 const EMAIL_PW_MSG = 'Error: Email or password does not match.';
 
 
-
 // ROUTES
-router.post('/message', (req, res) => {
-    var message = req.body.message;
-    res.render('sign-up', {
-        myMessage: message
-    });
-});
-
-
-
-
 router.post('/sign-up', async (req, res) => {
     try {
         const foundUser = await db.User.exists({ email: req.body.email });
@@ -42,14 +31,12 @@ router.post('/sign-up', async (req, res) => {
 
 
 
-
+// new login route
 router.get('/login', (req, res) => {
     res.render('login');
 });
 
-
-
-
+// create login route
 router.post('/login', async (req, res) => {
     try {
         const foundUser = await db.User.findOne({ email: req.body.email });
@@ -80,8 +67,9 @@ router.delete("/logout", async function (req, res) {
 
 
 router.get('/profile', async (req, res) => {
+    console.log(req.session.currentUser);
     try {
-        const oneUser = await db.User.findOne({});
+        const oneUser = await db.User.findById(req.session.currentUser.id);
         context = {
             user: oneUser
         }

@@ -13,19 +13,17 @@
     <div>
         What's something you wish someone would say to you?
     </div>
-    <form action="/message" method="POST">
-        <textarea name="message" id="home_message" cols="30" rows="10"></textarea></br>
+    <form action="/messages" method="POST">
+        <textarea name="content" id="home_message" cols="30" rows="10"></textarea></br>
         <input type="submit" value="Say it">
     </form>
 
     <% if (user) { %>
     <p>Welcome, <%= user.name %></p>
-    <% console.log(user) %>
     <form action="/logout?_method=DELETE" method="POST">
         <input type="submit" value="Logout">
     </form>
     <% } else { %>
-    <% console.log(user) %>
     <a href="/login">Login</a>
     <a href="/sign-up">Register</a>
     <% } %>
