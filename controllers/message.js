@@ -24,7 +24,9 @@ router.post('/', async (req, res) => {
                 }, (err, updatedItem) => {
                     if (err) return res.send(err);
                     console.log(updatedItem);
-                    res.redirect('/profile');
+                    res.render('profile', {
+                        user: updatedItem
+                    });
                 });
         } catch (error) {
             console.log('Internal server error!');
