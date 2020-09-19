@@ -1,3 +1,5 @@
+
+
 const calendarEl = document.getElementById('calendar');
 const calendar = new FullCalendar.Calendar(calendarEl, {
   headerToolbar: false,
@@ -8,6 +10,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
       dayCount: 1
     }
   },
+  lazyFetching: false,
   aspectRatio: .5,
   allDaySlot: false,
   dayHeaders: false,
@@ -15,10 +18,17 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
     date = new Date(info.dateStr);
     $('input[name="scheduledFor"]').val(info.dateStr);
     $('#nudge-modal').css('display', 'block');
-
-  }, 
+  }
 });
+calendar.render();
 
-$('#show-nudges').on('click', () => {
-  calendar.render();
+$('button').on('click', () => {
+    calendar.addEventSource([{
+      title: $('input[name="taskName"]').val(),
+      start: $('input[name="scheduledFor"]').val()
+    }]);
+    calendar.refetchEvents();
+  document.newNudge.submit();
+
 })
+
