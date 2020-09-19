@@ -13,3 +13,7 @@ ul {
 input[name="scheduledFor"] {
   display: none;
 }
+
+input[name="user"] {
+  display: none;
+}

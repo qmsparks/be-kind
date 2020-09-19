@@ -79,4 +79,16 @@ router.delete("/logout", async function (req, res) {
 
 
 
+router.get('/profile', async (req, res) => {
+    try {
+        const oneUser = await db.User.findOne({});
+        context = {
+            user: oneUser
+        }
+        res.render('profile', context);
+    } catch (error) {
+        res.send('Internal error', error);
+    }
+})
+
 module.exports = router;
