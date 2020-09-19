@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
 
     if (!user) {
         res.render('sign-up', {
-            myMessage: req.body.message
+            myMessage: req.body.content
         });
     } else {
         try {
