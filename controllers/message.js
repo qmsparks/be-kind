@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
         try {
             req.body.user = user.id;
             const message = await db.Message.create(req.body);
+            console.log(message);
 
             db.User.findByIdAndUpdate(
                 req.body.user,
