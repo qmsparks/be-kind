@@ -15,47 +15,38 @@ const app = express();
 const PORT = 3000;
 app.set('view engine', 'ejs');
 
+
+
+
 // MIDDLEWARE
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.originalUrl}`);
+    next();
+});
 app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: "hawksblood",
-  store: new MongoStore(
-    {url: "mongodb://localhost:27017/be-kind-sessions"}
-  ),
-  cookie: {
-    // milliseconds
-    // 1000 (one second) * 60 (one minute) * 60 (one hour) * 24 (one day) * 7 (one week) * 2
-    maxAge: 1000 * 60 * 60 * 24 * 7 * 2
-  }
+    resave: false,
+    saveUninitialized: false,
+    secret: "hawksblood",
+    store: new MongoStore({
+        url: "mongodb://localhost:27017/be-kind-sessions",
+    }),
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 * 2
+    }
 }));
 
-app.use((req, res, next) => {
-  console.log(`${
-    req.method
-  } ${
-    req.originalUrl
-  }`);
-  next();
-});
 
-// views route
+
+// ROUTES
 app.get('/', (req, res) => {
   res.render('index', {user: req.session.currentUser});
 });
-
-// auth routes
 app.use('/', controllers.auth);
-
-// message routes
 app.use('/messages', controllers.message);
-
-// nudge routes
 app.use('/nudges', controllers.nudge);
-
 
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);
