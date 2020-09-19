@@ -20,7 +20,3 @@
     }
   });
   calendar.render();
-
-  $('#addEvent').on('click', () => {
-    calendar.addEvent
-  })
