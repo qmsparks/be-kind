@@ -1,0 +1,15 @@
+#nudgeboard-wrapper{
+  width: 35%
+}
+
+ul {
+  list-style-type: none;
+}
+
+#nudge-modal {
+  display: none;
+}
+
+input[name="scheduledFor"] {
+  display: none;
+}
