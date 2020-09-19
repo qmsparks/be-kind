@@ -3,22 +3,36 @@ const router = express.Router();
 
 const db = require('../models');
 
-router.post('/message', (req, res) => {
-    const user = req.session;
-    console.log(user);
-    var message = req.body.message;
+router.post('/', async (req, res) => {
+    const user = req.session.currentUser;
 
     if (!user) {
-        console.log('No User');
-        return;
-    } else if (user) {
-        console.log('User exists');
-        return;
+        res.render('sign-up', {
+            myMessage: req.body.message
+        });
+    } else {
+        try {
+            req.body.user = user.id;
+            const message = await db.Message.create(req.body);
+            db.User.findByIdAndUpdate(
+                req.body.user,
+                {
+                    $push: {
+                        messages: message
+                    }
+                },
+                (err, updatedItem) => {
+                    if (err) return res.send(err);
+                    console.log(updatedItem);
+                    res.redirect('profile');
+                });
+        } catch (error) {
+            console.log('Internal server error!');
+        }
+
     }
     // db.Message.create
-    // res.render('sign-up', {
-    //     myMessage: message
-    // });
+
 });
 
 module.exports = router;
