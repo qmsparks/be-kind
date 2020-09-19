@@ -80,8 +80,9 @@ router.delete("/logout", async function (req, res) {
 
 
 router.get('/profile', async (req, res) => {
+    console.log(req.session.currentUser);
     try {
-        const oneUser = await db.User.findOne({});
+        const oneUser = await db.User.findById(req.session.currentUser.id);
         context = {
             user: oneUser
         }
