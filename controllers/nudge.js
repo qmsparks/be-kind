@@ -7,8 +7,12 @@ const db = require('../models');
 // create 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body.user);
-    
+    // console.log(req.body);
+    const createdNudge = await db.Nudge.create(req.body);
+    // console.log(createdNudge);
+    const foundUser = await db.User.findById(createdNudge.user);
+    foundUser.nudges.push(createdNudge._id);
+    await foundUser.save();
     res.redirect('/profile');
   } catch (error) {
     res.send(error);
