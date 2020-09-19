@@ -20,12 +20,9 @@ router.post('/', async (req, res) => {
                     $push: {
                         messages: message
                     }
-                },
-                (err, updatedItem) => {
-                    if (err) {
-                        return res.send(err);
-                    }
-
+                }, (err, updatedItem) => {
+                    if (err) return res.send(err);
+                    console.log(updatedItem);
                     res.redirect('/profile');
                 });
         } catch (error) {
