@@ -32,6 +32,13 @@ app.use((req, res, next) => {
     next();
 });
 
+// views route
+app.get('/', (req, res) => {
+    res.render('index', {
+        user: req.session.currentUser
+    });
+});
+
 // auth routes
 app.use('/', controllers.auth);
 
@@ -41,9 +48,7 @@ app.use('/messages', controllers.message);
 // nudge routes
 app.use('/nudges', controllers.nudge);
 
-app.get('/', (req, res) => {
-    res.render('index');
-});
+
 
 app.listen(PORT, () => {
     console.log(`Now listening for requests on port ${PORT}`);
