@@ -1,15 +1,21 @@
+// EXTERNAL MODULES
 const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
+const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+// INTERNAL MODULES
 const controllers = require('./controllers');
+
+// INSTANCED MODULES
 const app = express();
 
+// CONFIGURATION
 const PORT = 3000;
-
 app.set('view engine', 'ejs');
 
+// MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));

@@ -18,14 +18,16 @@
         <input type="submit" value="Say it">
     </form>
 
-    <% if(user) { %>
-    <p>Welcome, <%= user.username %></p>
+    <% if (user) { %>
+    <p>Welcome, <%= user.name %></p>
+    <% console.log(user) %>
     <form action="/logout?_method=DELETE" method="POST">
         <input type="submit" value="Logout">
     </form>
     <% } else { %>
+    <% console.log(user) %>
     <a href="/login">Login</a>
-    <a href="/register">Register</a>
+    <a href="/sign-up">Register</a>
     <% } %>
 </body>
 
