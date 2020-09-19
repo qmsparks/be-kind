@@ -22,17 +22,16 @@ router.post('/', async (req, res) => {
                     }
                 },
                 (err, updatedItem) => {
-                    if (err) return res.send(err);
-                    console.log(updatedItem);
-                    res.redirect('profile');
+                    if (err) {
+                        return res.send(err);
+                    }
+
+                    res.redirect('/profile');
                 });
         } catch (error) {
             console.log('Internal server error!');
         }
-
     }
-    // db.Message.create
-
 });
 
 module.exports = router;
