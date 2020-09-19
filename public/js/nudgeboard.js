@@ -1,6 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
+  const calendarEl = document.getElementById('calendar');
+  const calendar = new FullCalendar.Calendar(calendarEl, {
     headerToolbar: false,
     initialView: 'timeGridOneDay',
     views: {
@@ -21,4 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   calendar.render();
-});
+
+  $('#addEvent').on('click', () => {
+    calendar.addEvent
+  })
