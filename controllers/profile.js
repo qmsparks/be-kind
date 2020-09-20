@@ -30,6 +30,14 @@ router.get('/', (req, res) => {
 })
 
 // ANCHOR update route
+router.put('/', async (req, res) =>{
+  try {
+  await db.User.findByIdAndUpdate(req.session.currentUser.id, req.body, {new: true});
+    res.redirect('/profile');
+  } catch (error) {
+    res.send(error);
+  }
+})
 
 // ANCHOR delete route
 
