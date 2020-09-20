@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// const renderEvent = require('../public/js/nudgeboard');
+
 const db = require('../models');
 
 // create 
