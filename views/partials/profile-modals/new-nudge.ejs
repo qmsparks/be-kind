@@ -1,0 +1,10 @@
+<div id="nudge-modal">
+  <form action="/nudges" method="POST">
+    <input type="text" name="taskName" placeholder="A friendly nudge">
+    <input type="text" name="taskDescription" placeholder="Want to say anything more about it?">
+    <input type="text" name="scheduledFor">
+    <input type="text" name="user" value="<%= user._id %>">
+    <input type="submit" value="Submit">
+  </form>
+</div>
+<button>Add Nudge</button>

@@ -6,6 +6,10 @@ ul {
   list-style-type: none;
 }
 
+#update-modal {
+  display: none;
+}
+
 #nudge-modal {
   display: none;
 }
@@ -17,3 +21,4 @@ input[name="scheduledFor"] {
 input[name="user"] {
   display: none;
 }
+

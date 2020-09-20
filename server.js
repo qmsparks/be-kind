@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 
 
 // MIDDLEWARE
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use((req, res, next) => {
@@ -42,14 +42,13 @@ app.use(session({
 
 // ROUTES
 app.get('/', (req, res) => {
-    res.render('index', {
-        user: req.session.currentUser
-    });
+  res.render('index', {user: req.session.currentUser});
 });
 app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
+app.use('/profile', controllers.profile);
 
 app.listen(PORT, () => {
-    console.log(`Now listening for requests on port ${PORT}`);
+  console.log(`Now listening for requests on port ${PORT}`);
 });

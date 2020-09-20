@@ -16,23 +16,23 @@
       <li><a href="#">Contact</a></li>
     </ul>
   </nav>
-  <h1><%= user.name %>'s Kind Board</h1>
-
+  <i class="fas fa-user-edit"></i> <h1> <%= user.name %>'s Kind Board</h1>
+  <%- include('./partials/profile-modals/edit-profile')  %>   
   <%- include('./partials/messages') %>
 
   <div id="nudgeboard-wrapper">
-    <div id="nudge-modal">
-      <form action="/nudges" method="POST">
-        <input type="text" name="taskName" placeholder="A friendly nudge">
-        <input type="text" name="taskDescription" placeholder="Want to say anything more about it?">
-        <input type="text" name="scheduledFor">
-        <input type="text" name="user" value="<%= user._id %>">
-        <p id="addEvent">Add event</p>
-        <input type="submit" value="Add Nudge">
-      </form>
+    <%- include('./partials/profile-modals/new-nudge')  %> 
+    <div id="calendar">
+      <ul>
+        <% user.nudges.forEach(nudge => { %>
+        <li>
+          <%= nudge.taskName %>
+        </li>
+        <% }) %>
+      </ul>
     </div>
-    <div id="calendar"></div>
   </div>
+
 
 </body>
 
