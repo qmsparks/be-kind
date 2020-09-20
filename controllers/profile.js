@@ -40,6 +40,17 @@ router.put('/', async (req, res) =>{
 })
 
 // ANCHOR delete route
+router.delete('/', async (req, res) => {
+  try {
+    const deletedUser = await db.User.findByIdAndDelete(req.session.currentUser.id);
+    await db.Message.remove({user: deletedUser._id});
+    await db.Nudge.remove({user: deletedUser._id});
+    await req.session.destroy();
+    res.redirect('/');
+  } catch (error) {
+    
+  }
+})
 
 
 module.exports = router;
