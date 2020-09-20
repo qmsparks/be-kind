@@ -16,7 +16,8 @@
       <li><a href="#">Contact</a></li>
     </ul>
   </nav>
-  <i class="fas fa-user-edit"></i> <h1> <%= user.name %>'s Kind Board</h1>  
+  <i class="fas fa-user-edit"></i> <h1> <%= user.name %>'s Kind Board</h1>
+  <%- include('./partials/profile-modals/edit-profile')  %>   
   <%- include('./partials/messages') %>
 
   <div id="nudgeboard-wrapper">
@@ -28,9 +29,7 @@
           <%= nudge.taskName %>
         </li>
         <% }) %>
-
       </ul>
-
     </div>
   </div>
 
