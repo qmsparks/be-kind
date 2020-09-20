@@ -86,7 +86,7 @@ router.post('/login', async (req, res) => {
 
 
 // delete session route
-router.delete("/logout", async function (req, res) {
+router.delete("/logout", async (req, res) => {
   try {
     await req.session.destroy();
     res.redirect('/');
@@ -95,7 +95,6 @@ router.delete("/logout", async function (req, res) {
       message: INTERNAL_ERR
     });
   }
-
 });
 
 
