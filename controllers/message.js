@@ -16,8 +16,11 @@ router.post('/', async (req, res) => {
     const user = req.session.currentUser;
 
     if (!user) {
+        const newMessage = await db.Message.create(req.body);
+        req.session.heldMessage = newMessage;
+        
         res.render('sign-up', {
-            myMessage: req.body.content
+            myMessage: req.session.heldMessage
         });
     } else {
         try {
@@ -38,6 +41,7 @@ router.post('/', async (req, res) => {
                         user: updatedItem
                     });
                 });
+            await currentUser.save();
         } catch (error) {
             console.log('Internal server error!');
         }
