@@ -47,6 +47,7 @@ app.get('/', (req, res) => {
 app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
+app.use('/profile', controllers.profile);
 
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);
