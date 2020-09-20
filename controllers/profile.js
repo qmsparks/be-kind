@@ -29,6 +29,12 @@ router.get('/', (req, res) => {
   })
 })
 
+// ANCHOR edit route
+
+// ANCHOR update route
+
+// ANCHOR delete route
+
 
 module.exports = router;
 
