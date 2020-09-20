@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
             console.log(message);
 
             db.User.findByIdAndUpdate(
-                req.body.user,
+                message.user,
                 {
                     $push: {
                         messages: message
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
                     });
                 });
         } catch (error) {
-            console.log('Internal server error!');
+            console.log(error + ': Internal server error!');
         }
     }
 });

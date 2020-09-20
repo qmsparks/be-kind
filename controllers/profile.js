@@ -19,20 +19,22 @@ const db = require('../models');
 
 // NOTE temporariily living in callback hell until I can figure out how to populate nudges using async/await
 router.get('/', (req, res) => {
-  db.User.findById(req.session.currentUser.id).populate('nudges').exec( (err, foundUser) => {
-    if (err) return res.send(err);
+  db.User.findById(req.session.currentUser.id)
+    .populate('nudges')
+    .exec((err, foundUser) => {
+      if (err) return res.send(err);
 
-    const context = {
-      user: foundUser
-    };
-    res.render('profile', context);
-  })
+      const context = {
+        user: foundUser
+      };
+      res.render('profile', context);
+    })
 })
 
 // ANCHOR update route
-router.put('/', async (req, res) =>{
+router.put('/', async (req, res) => {
   try {
-  await db.User.findByIdAndUpdate(req.session.currentUser.id, req.body, {new: true});
+    await db.User.findByIdAndUpdate(req.session.currentUser.id, req.body, { new: true });
     res.redirect('/profile');
   } catch (error) {
     res.send(error);
@@ -43,12 +45,12 @@ router.put('/', async (req, res) =>{
 router.delete('/', async (req, res) => {
   try {
     const deletedUser = await db.User.findByIdAndDelete(req.session.currentUser.id);
-    await db.Message.remove({user: deletedUser._id});
-    await db.Nudge.remove({user: deletedUser._id});
+    await db.Message.remove({ user: deletedUser._id });
+    await db.Nudge.remove({ user: deletedUser._id });
     await req.session.destroy();
     res.redirect('/');
   } catch (error) {
-    
+
   }
 })
 
