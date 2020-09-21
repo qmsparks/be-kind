@@ -30,7 +30,7 @@ nav #links {
 
 #first-message input {
   opacity: 0;
-  transition: opacity 1s linear 1s;
+  transition: opacity 1s linear .3s;
 }
 
 #question {
