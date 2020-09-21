@@ -7,9 +7,10 @@ const bcrypt = require('bcryptjs');
 // Internal Modules
 const db = require('../models');
 
-// Feedback Messages
-const ACCOUNT_EXISTS_MSG = 'There is already an account with this email.';
-const EMAIL_PW_MSG = 'Error: Email or password does not match.';
+// Feedback Constants
+const ACCOUNT_EXISTS_ERR = 'There is already an account with this email.';
+const EMAIL_PW_ERR = 'ERROR: Email or password does not match.';
+const INTERNAL_ERR = 'ERROR: Internal server error';
 
 
 
@@ -19,18 +20,27 @@ const EMAIL_PW_MSG = 'Error: Email or password does not match.';
 // create account route
 router.post('/sign-up', async (req, res) => {
   try {
-    const foundUser = await db.User.exists({email: req.body.email});
-    if (foundUser) 
-      return res.send({message: ACCOUNT_EXISTS_MSG});
-    
+    const foundUser = await db.User.exists({
+      email: req.body.email
+    });
+
+    console.log('Found user exists: ' + foundUser);
+
+    if (foundUser) return res.send({
+      message: ACCOUNT_EXISTS_ERR
+    });
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(req.body.password, salt);
     req.body.password = hash;
 
+    console.log('password hash: ' + req.body.password);
+
     const newUser = await db.User.create(req.body);
 
-    if(req.session.heldMessage) {
+    console.log('New User: ' + newUser);
+
+    if (req.session.heldMessage) {
       newUser.messages.push(req.session.heldMessage.id);
       await newUser.save();
       req.session.destroy();
@@ -38,7 +48,9 @@ router.post('/sign-up', async (req, res) => {
 
     res.redirect('/login')
   } catch (error) {
-    res.send({message: 'Internal server error'});
+    res.send({
+      message: INTERNAL_ERR + ': ' + error
+    });
   }
 });
 
@@ -55,29 +67,46 @@ router.get('/login', (req, res) => {
 
 // create login route
 router.post('/login', async (req, res) => {
-    try {
-        const foundUser = await db.User.findOne({ email: req.body.email });
-        if (!foundUser) return res.send({ message: EMAIL_PW_MSG });
+  try {
+    const foundUser = await db.User.findOne({
+      email: req.body.email
+    });
 
-        const match = await bcrypt.compare(req.body.password, foundUser.password);
-        if (!match) return res.send({ message: EMAIL_PW_MSG });
+    if (!foundUser) return res.send({
+      message: EMAIL_PW_ERR
+    });
 
-        req.session.currentUser = {
-            name: foundUser.name,
-            id: foundUser._id,
-        }
-        res.redirect("/profile")
-    } catch (error) {
-        res.send({ message: 'Internal server error' });
+    const match = await bcrypt
+      .compare(req.body.password, foundUser.password);
+    if (!match) return res.send({
+      message: EMAIL_PW_ERR
+    });
+
+    req.session.currentUser = {
+      name: foundUser.name,
+      id: foundUser._id,
     }
+
+    res.redirect('/profile')
+  } catch (error) {
+    res.send({
+      message: INTERNAL_ERR + ': ' + error
+    });
+  }
 });
 
 
 
 // delete session route
-router.delete("/logout", async function (req, res) {
-  await req.session.destroy();
-  res.redirect("/");
+router.delete("/logout", async (req, res) => {
+  try {
+    await req.session.destroy();
+    res.redirect('/');
+  } catch (error) {
+    res.send({
+      message: INTERNAL_ERR + ': ' + error
+    });
+  }
 });
 
 

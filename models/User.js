@@ -2,11 +2,27 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  name: { type: String, required: true },
-  email: { type: String, unique: true },
-  phone: { type: String, unique: true },
-  password: { type: String, required: true },
-  sendOnce: Boolean,
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    unique: true
+  },
+  phone: {
+    type: String,
+    // NOTE do not need this property until we're dealing with phones.
+    // unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  receiveDailyMessages: {
+    type: Boolean,
+    default: false
+  },
   messages: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Message'
@@ -14,8 +30,10 @@ const userSchema = new Schema({
   nudges: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Nudge'
-  }]
-}, { timestamps: true });
+  }],
+}, {
+  timestamps: true
+});
 
 const User = mongoose.model('User', userSchema);
 

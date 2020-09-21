@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     if (!user) {
         const newMessage = await db.Message.create(req.body);
         req.session.heldMessage = newMessage;
-        
+
         res.render('sign-up', {
             myMessage: req.session.heldMessage
         });
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
             console.log(message);
 
             db.User.findByIdAndUpdate(
-                req.body.user,
+                message.user,
                 {
                     $push: {
                         messages: message
@@ -41,9 +41,8 @@ router.post('/', async (req, res) => {
                         user: updatedItem
                     });
                 });
-            await currentUser.save();
         } catch (error) {
-            console.log('Internal server error!');
+            console.log(error + ': Internal server error!');
         }
     }
 });
