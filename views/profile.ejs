@@ -22,14 +22,8 @@
 
   <div id="nudgeboard-wrapper">
     <%- include('./partials/profile-modals/new-nudge')  %> 
+    <%- include('./partials/profile-modals/edit-nudge')  %> 
     <div id="calendar">
-      <ul>
-        <% user.nudges.forEach(nudge => { %>
-        <li>
-          <%= nudge.taskName %>
-        </li>
-        <% }) %>
-      </ul>
     </div>
   </div>
 
