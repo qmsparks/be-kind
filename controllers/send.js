@@ -127,11 +127,11 @@ const schedule = async (user, message = true) => {
             }
         }
 
-        const job = new CronJob('* * * * * *', () => {
-            sendMessage(currentTransmission.content);
-        });
+        // const job = new CronJob('* * * * * *', () => {
+        //     sendMessage(currentTransmission.content);
+        // });
 
-        job.start();
+        // job.start();
     } catch (error) {
         console.log(error);
     }
