@@ -7,10 +7,20 @@
 </head>
 
 <body>
+    <nav>
+        <% if (user) { %>
+        <p>Welcome, <%= user.name %></p>
+        <form action="/logout?_method=DELETE" method="POST">
+            <input type="submit" value="Logout">
+        </form>
+        <% } else { %>
+        <a href="/login">Login</a>
+        <a href="/sign-up">Register</a>
+        <% } %>
+    </nav>
     <div id="first-message">
         <div>
             <p id="question">
-
             </p>
         </div>
         <form action="/messages" method="POST">
