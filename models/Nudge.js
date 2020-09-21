@@ -18,23 +18,22 @@ const nudgeSchema = new Schema({
   },
   scheduledFor: {
     type: Date,
-    // NOTE temporarily commenting this property out in order to do some testing.
-    // will add back in once we get to the texting part.
-    // required: true
-  }
+    required: true
+  },
+  cronString: String
 }, {
   timestamps: true
 });
 
-nudgeSchema.methods.scheduleNudge = function() {
-  console.log('New nudge schedule for: ');
-  const cronString = getCronValues(this.scheduledFor);
-  console.log(cronString);
-  const job = new CronJob(cronString, () => {
-    console.log(this.taskName);
+nudgeSchema.methods.getCronString = async function() {
+  // console.log('New nudge scheduled for: ');
+  this.cronString = getCronValues(this.scheduledFor);
+  // this.cronString = '* * * * * ';
+
+  this.job = new CronJob(this.cronString, () => {
+    console.log('A nudge has been scheduled');
   })
-  // console.log(job);
-  // job.start();
+  console.log(this.job);
 }
 
 

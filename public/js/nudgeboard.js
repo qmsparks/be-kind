@@ -10,9 +10,13 @@ const populateCalendar = function(nudges) {
   nudges.forEach(nudge => {
     const calendarNudge = {
       title: nudge.taskName,
-      start: nudge.scheduledFor,
       id: nudge._id,
-      description: nudge.taskDescription
+      // NOTE some oddness with populating the description in the edit modal, I suspect it starts here
+      description: nudge.taskDescription,
+      rrule: {
+        freq: 'daily',
+        dtstart: nudge.scheduledFor
+      }
     }
     calendar.addEventSource([calendarNudge]);
   })

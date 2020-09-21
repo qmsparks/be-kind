@@ -4,10 +4,11 @@ const path = require('path');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const CronJob = require('cron').CronJob;
+// const CronJob = require('cron').CronJob;
 
 // INTERNAL MODULES
 const controllers = require('./controllers');
+const db = require('./models');
 
 // INSTANCED MODULES
 const app = express();
@@ -16,12 +17,16 @@ const app = express();
 const PORT = 3000;
 app.set('view engine', 'ejs');
 
+// const startCronJobs = async function(req, res, next) {
 
+//   next();
+// }
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+// app.use(startCronJobs);
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.originalUrl}`);
   next();
@@ -37,6 +42,8 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 * 7 * 2
   }
 }));
+
+
 
 
 // ROUTES

@@ -10,7 +10,8 @@ const { findByIdAndUpdate } = require('../models/User');
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
-    createdNudge.scheduleNudge();
+    createdNudge.getCronString();
+    await createdNudge.save();
     const currentUser = await db.User.findById(req.session.currentUser.id);
     currentUser.nudges.push(createdNudge._id);
     await currentUser.save();
@@ -46,7 +47,7 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// TODO  delete
+// ANCHOR  delete
 router.delete('/:id', async (req, res) => {
   try {
     await db.Nudge.findByIdAndDelete(req.params.id);
