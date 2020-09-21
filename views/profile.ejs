@@ -9,15 +9,10 @@
 </head>
 
 <body>
-  <nav>
-    <ul>
-      <li id="logo">Be Kind</li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-  <i class="fas fa-user-edit"></i> <h1> <%= user.name %>'s Kind Board</h1>
-  <%- include('./partials/profile-modals/edit-profile')  %>   
+  <%- include('./partials/nav') %>
+  <i class="fas fa-user-edit"></i>
+  <h1> <%= user.name %>'s Kind Board</h1>
+  <%- include('./partials/profile-modals/edit-profile')  %>
   <%- include('./partials/messages') %>
 
   <div id="nudgeboard-wrapper">
@@ -27,7 +22,7 @@
     </div>
   </div>
 
-  <%- include('./partials/profile-modals/delete-profile')  %> 
+  <%- include('./partials/profile-modals/delete-profile')  %>
 
 </body>
 
