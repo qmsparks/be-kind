@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid white; */
+}
+
+body {
+    background-color: rgb(22, 23, 24);
+    background-blend-mode: lighten;
+    background-size: cover;
+}
+
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.cta-btn {
+  width: fit-content;
+  padding: 10px 15px;
+  border-radius: 30px;
+  color: white;
+  font-weight: bolder;
+  background-color: coral;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+}
+
+.cta-btn:hover {
+  background-color: rgb(228, 92, 42);
+}
+
+.cta-btn:active {
+    color: coral;
+    background-color: white;
+}
+
+.cta-btn:focus {
+  outline: 0;
+}
+
+nav #links {
+    display: flex;
+    flex-direction: row nowrap;
+}
+
+
+#first-message {
+  width: 50%;
+  margin: 30px auto;
+  padding-top: 30px;
+}
+
+#first-message input {
+  opacity: 0;
+  transition: opacity 1s linear .3s;
+}
+
+#question {
+  margin-top: 100px;
+  font-family: helvetica;
+  font-size: 2rem;
+  color: darkseagreen;
+}
+
+#answer {
+  background-color: rgb(22, 23, 24);
+  margin-top: 60px;
+  font-family: helvetica;
+  font-size: 2rem;
+  color: white;
+}
+
+.btn {
+  width: fit-content;
+  padding: 10px 20px;
+  margin: 20px;
+  color: white;
+  font-size: 1.2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+  background-color: rgba(256, 256, 256, 0);
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgba(256, 256, 256, 0.7);
+  transition: background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgba(256, 256, 256, 0.7);
+  font-weight: bold;
+  color: rgb(22, 23, 24);
+}
+
+.btn:active {
+  background-color: rgba(256, 256, 256, 1);
+  border-color: rgba(256, 256, 256, 1);
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+textarea {
+    border: none;
+    width: 100%;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none; /*remove the resize handle on the bottom right*/
+}
+
+
+
+/* NUDGEBOARD CSS */
+#nudgeboard-wrapper{
+  width: 35%
+}
+
+ul {
+  list-style-type: none;
+}
+
+#update-modal {
+  display: none;
+}
+
+#nudge-modal {
+  display: none;
+}
+
+input[name="scheduledFor"] {
+  display: none;
+}
+
+input[name="user"] {
+  display: none;
+}
+

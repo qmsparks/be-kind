@@ -1,0 +1,12 @@
+<!-- HOME NAV -->
+<nav>
+    <% if (user) { %>
+    <p id="welcome">Welcome, <%= user.name %></p>
+    <form action="/logout?_method=DELETE" method="POST">
+        <input type="submit" class="cta-btn" value="Logout">
+    </form>
+    <% } else { %>
+    <a href="/login">Login</a>
+    <a href="/sign-up">Register</a>
+    <% } %>
+</nav>
