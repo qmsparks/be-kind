@@ -39,7 +39,6 @@ app.use(session({
 }));
 
 
-
 // ROUTES
 app.get('/', (req, res) => {
   res.render('index', { user: req.session.currentUser });
@@ -48,7 +47,7 @@ app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
-// app.use('/send', controllers.send);
+app.use('/send', controllers.send);
 
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);

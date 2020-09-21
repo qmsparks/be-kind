@@ -9,6 +9,7 @@ const { response } = require('express');
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
+    createdNudge.scheduleNudge();
     const currentUser = await db.User.findById(req.session.currentUser.id);
     currentUser.nudges.push(createdNudge._id);
     await currentUser.save();

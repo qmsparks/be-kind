@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CronJob = require('cron').CronJob;
 const Schema = mongoose.Schema;
 
 const nudgeSchema = new Schema({
@@ -24,6 +25,10 @@ const nudgeSchema = new Schema({
 }, {
   timestamps: true
 });
+
+nudgeSchema.methods.scheduleNudge = function() {
+  console.log('New nudge scheduled');
+}
 
 const Nudge = mongoose.model('Nudge', nudgeSchema);
 
