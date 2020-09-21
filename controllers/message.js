@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     if (!user) {
         const newMessage = await db.Message.create(req.body);
         req.session.heldMessage = newMessage;
-        
+
         res.render('sign-up', {
             myMessage: req.session.heldMessage
         });
@@ -43,7 +43,9 @@ router.post('/', async (req, res) => {
                 });
             await currentUser.save();
         } catch (error) {
-            console.log(error + ': Internal server error!');
+            res.send({
+                message: 'Error: ' + error
+            })
         }
     }
 });

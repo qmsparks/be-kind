@@ -13,7 +13,9 @@ router.post('/', async (req, res) => {
     await currentUser.save();
     res.redirect('/profile');
   } catch (error) {
-    res.send(error);
+    res.send({
+      message: 'Error: ' + error
+    });
   }
 });
 

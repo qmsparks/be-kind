@@ -24,6 +24,8 @@ router.post('/sign-up', async (req, res) => {
       email: req.body.email
     });
 
+    console.log('Found user exists: ' + foundUser);
+
     if (foundUser) return res.send({
       message: ACCOUNT_EXISTS_ERR
     });
@@ -32,9 +34,13 @@ router.post('/sign-up', async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, salt);
     req.body.password = hash;
 
+    console.log('password hash: ' + req.body.password);
+
     const newUser = await db.User.create(req.body);
 
-    if(req.session.heldMessage) {
+    console.log('New User: ' + newUser);
+
+    if (req.session.heldMessage) {
       newUser.messages.push(req.session.heldMessage.id);
       await newUser.save();
       req.session.destroy();
@@ -43,7 +49,7 @@ router.post('/sign-up', async (req, res) => {
     res.redirect('/login')
   } catch (error) {
     res.send({
-      message: INTERNAL_ERR
+      message: INTERNAL_ERR + ': ' + error
     });
   }
 });
@@ -84,7 +90,7 @@ router.post('/login', async (req, res) => {
     res.redirect('/profile')
   } catch (error) {
     res.send({
-      message: INTERNAL_ERR
+      message: INTERNAL_ERR + ': ' + error
     });
   }
 });
@@ -98,7 +104,7 @@ router.delete("/logout", async (req, res) => {
     res.redirect('/');
   } catch (error) {
     res.send({
-      message: INTERNAL_ERR
+      message: INTERNAL_ERR + ': ' + error
     });
   }
 });
