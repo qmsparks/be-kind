@@ -12,7 +12,6 @@ body {
 }
 
 nav {
-
     display: flex;
     flex-flow: row nowrap;
 }
@@ -27,7 +26,10 @@ nav #links {
   width: 50%;
   margin: 30px auto;
   padding-top: 30px;
-  text-align: center;
+}
+
+#first-message input {
+  visibility: hidden;
 }
 
 #question {
