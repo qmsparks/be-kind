@@ -8,7 +8,9 @@ const db = require('../models');
 
 
 
-
+router.post('/send', async (req, res) => {
+    // declare new cronJob
+})
 
 // ANCHOR Routes
 // create and push message to user messages
@@ -52,6 +54,16 @@ router.post('/', async (req, res) => {
 
 
 
+
+// ANCHOR Helper Functions
+/**
+ * @function schedule()
+ * @description: schedules a message for sending returns CronJob??
+ * @param {Message _id} messageId - message object pulled from database 
+ */
+const schedule = (message) => {
+
+}
 
 
 // ANCHOR Exports
