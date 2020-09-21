@@ -19,35 +19,36 @@ app.set('view engine', 'ejs');
 
 
 // MIDDLEWARE
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.originalUrl}`);
-    next();
+  console.log(`${req.method} ${req.originalUrl}`);
+  next();
 });
 app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: "hawksblood",
-    store: new MongoStore({
-        url: "mongodb://localhost:27017/be-kind-sessions",
-    }),
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 2
-    }
+  resave: false,
+  saveUninitialized: false,
+  secret: "hawksblood",
+  store: new MongoStore({
+    url: "mongodb://localhost:27017/be-kind-sessions",
+  }),
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 * 2
+  }
 }));
 
 
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.render('index', {user: req.session.currentUser});
+  res.render('index', { user: req.session.currentUser });
 });
 app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
+app.use('/send', controllers.send);
 
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);

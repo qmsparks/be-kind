@@ -1,3 +1,5 @@
+const { db } = require('./models/User');
+
 const CronJob = require('cron').CronJob;
 let count = 0;
 
@@ -19,7 +21,6 @@ setTimeout(() => {
 
 const playDate = new Date('September 30, 2020, 3:24:00');
 
-
 const getCronValues = (createdAt) => {
     const minute = createdAt.getMinutes();
     const hour = createdAt.getHours();
@@ -28,6 +29,12 @@ const getCronValues = (createdAt) => {
     const dayOfWeek = createdAt.getDay();
 
     return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
+}
+
+const randomNumInRange = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
 }
 
 const sendMessage = (message) => {
@@ -52,7 +59,6 @@ const getRandomTimeOfWeek = (cronValues) => {
     const createDate = valNums[2];
     const createDay = valNums[4];
     const daysInMonth = days[valNums[3] - 1];
-
     // if the user has receiveDailyMessages set to true, daysFromSend = 1 else :
     const daysFromSend = Math.floor(Math.random() * 7);
 
@@ -78,18 +84,37 @@ const getRandomTimeOfWeek = (cronValues) => {
 
 
 
-const randomNumInRange = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-}
 
-const schedule = (cronValues, transmission, daily = false) => {
-    // check if length of arguments is 2
-    // if yes, declare job, pass in cron values and sendMessage(message)
-    // job.start()
-    // if no, declare job, pass in cron values and sendNudge(nudge)
-    // job.start()
+
+const schedule = async (cronValues, transmission, message = true) => {
+    let currentTransmission;
+
+    try {
+        const user = await db.User.findById(transmission.user);
+        if (message) {
+            for (let i = 0; i < user.messages.length; i++) {
+                currentTransmission = await db.Message.findById(user.messages[i]);
+                if (!currentTransmission.sent) {
+                    break;
+                }
+            }
+        } else {
+            for (let i = 0; i < user.nudges.length; i++) {
+                currentMessage = await db.Nudge.findById(user.nudges[i]);
+                if (!currentTransmission.sent) {
+                    break;
+                }
+            }
+        }
+
+        const job = new CronJob(cronValues, () => {
+            sendMessage(currentTransmission.content);
+        });
+
+        job.start();
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 

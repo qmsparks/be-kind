@@ -11,6 +11,10 @@ const nudgeSchema = new Schema({
     required: true
   },
   taskDescription: String,
+  sent: {
+    type: Boolean,
+    default: false
+  },
   scheduledFor: {
     type: Date,
     // NOTE temporarily commenting this property out in order to do some testing.

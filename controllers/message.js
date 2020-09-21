@@ -62,7 +62,10 @@ router.post('/', async (req, res) => {
  * @param {Message _id} messageId - message object pulled from database 
  */
 const schedule = (message) => {
-
+    // const messageBirthday = message.createdAt
+    // const owner = find message owner with message.user
+    // check if owner has sendDailyMessages as true.
+    // if yes, schedule for random time the next day 
 }
 
 
