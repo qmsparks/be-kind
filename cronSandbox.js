@@ -1,18 +1,3 @@
-const { db } = require('./models/User');
-
-const CronJob = require('cron').CronJob;
-let count = 0;
-
-const job = new CronJob('* * * * * *', () => {
-    console.log('doing something');
-    count++;
-});
-
-job.start();
-
-setTimeout(() => {
-    job.stop()
-}, 5000);
 
 
 
@@ -31,11 +16,7 @@ const getCronValues = (createdAt) => {
     return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
 }
 
-const randomNumInRange = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-}
+
 
 const sendMessage = (message) => {
     // twilio message send

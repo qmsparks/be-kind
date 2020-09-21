@@ -5,24 +5,23 @@ const db = require('../models');
 
 
 // ANCHOR routes
-router.post('/', async (req, res) => {
-    const user = req.session.currentUser;
-    if (!user) return res.redirect('login');
+router.post('/message', async (req, res) => {
+    if (!req.session.currentUser) return res.redirect('login');
 
+    const user = await db.User.findById(req.session.currentUser.id);
+    console.log(user);
     try {
-
+        schedule(user, true);
     } catch (error) {
         res.send({
             message: error
         })
     }
-
-
 })
 
 
 // ANCHOR Helper Functions
-const sendMessage = (content) => {
+const sendMessage = (cronValues, content) => {
     console.log(content);
 }
 
@@ -108,11 +107,10 @@ const getRandomTimeOfWeek = (cronValues) => {
 
 
 
-const schedule = async (cronValues, user, message = true) => {
+const schedule = async (user, message = true) => {
     let currentTransmission;
 
     try {
-        const user = await db.User.findById(user._id);
         if (message) {
             for (let i = 0; i < user.messages.length; i++) {
                 currentTransmission = await db.Message.findById(user.messages[i]);
@@ -138,3 +136,6 @@ const schedule = async (cronValues, user, message = true) => {
         console.log(error);
     }
 }
+
+
+module.exports = router;
