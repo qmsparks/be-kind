@@ -11,7 +11,8 @@ const populateCalendar = function(nudges) {
     const calendarNudge = {
       title: nudge.taskName,
       start: nudge.scheduledFor,
-      id: nudge._id
+      id: nudge._id,
+      description: nudge.taskDescription
     }
     calendar.addEventSource([calendarNudge]);
   })

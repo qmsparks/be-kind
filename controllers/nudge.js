@@ -4,6 +4,7 @@ const router = express.Router();
 
 const db = require('../models');
 const { response } = require('express');
+const { findByIdAndUpdate } = require('../models/User');
 
 // create 
 router.post('/', async (req, res) => {
@@ -33,8 +34,16 @@ router.get('/api', (req, res) => {
 })
 
 // TODO update
-router.put('/:id', (req, res) => {
-  res.send('Update nudge');
+router.put('/:id', async (req, res) => {
+  try {
+    // res.send(req.body);
+    const updatedNudge = db.Nudge.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    await (await updatedNudge).save();
+    console.log(updatedNudge);
+    res.redirect('/profile');
+  } catch (err) {
+    res.send(err);
+  }
 })
 
 // TODO  delete

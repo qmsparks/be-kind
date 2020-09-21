@@ -8,7 +8,8 @@ const editNudge = function(nudge) {
   $('form[name="edit-nudge"]').attr('action', `/nudges/${nudge.id}?_method=PUT`);
   $('form[name="edit-nudge"] input[name="taskName"]').val(nudge.title);
 
-  if(nudge.description)
-
+  if(nudge.description) {
+    $('form[name="edit-nudge"] input[name="taskDescription"]').val(nudge.description);
+  }
   $('form[name="edit-nudge"] input[name="scheduledFor"]').val(nudge.start); 
 }
