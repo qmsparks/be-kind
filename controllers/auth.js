@@ -32,7 +32,13 @@ router.post('/sign-up', async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, salt);
     req.body.password = hash;
 
-    await db.User.create(req.body);
+    const newUser = await db.User.create(req.body);
+
+    if(req.session.heldMessage) {
+      newUser.messages.push(req.session.heldMessage.id);
+      await newUser.save();
+      req.session.destroy();
+    }
 
     res.redirect('/login')
   } catch (error) {
