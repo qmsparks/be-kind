@@ -8,9 +8,7 @@ const db = require('../models');
 
 
 
-router.post('/send', async (req, res) => {
-    // declare new cronJob
-})
+
 
 // ANCHOR Routes
 // create and push message to user messages
@@ -43,30 +41,14 @@ router.post('/', async (req, res) => {
                         user: updatedItem
                     });
                 });
-            await currentUser.save();
         } catch (error) {
-            res.send({
-                message: 'Error: ' + error
-            })
+            console.log(error + ': Internal server error!');
         }
     }
 });
 
 
 
-
-// ANCHOR Helper Functions
-/**
- * @function schedule()
- * @description: schedules a message for sending returns CronJob??
- * @param {Message _id} messageId - message object pulled from database 
- */
-const schedule = (message) => {
-    // const messageBirthday = message.createdAt
-    // const owner = find message owner with message.user
-    // check if owner has sendDailyMessages as true.
-    // if yes, schedule for random time the next day 
-}
 
 
 // ANCHOR Exports
