@@ -33,12 +33,12 @@ router.get('/api', (req, res) => {
   })
 })
 
-// TODO update
+// ANCHOR update
 router.put('/:id', async (req, res) => {
   try {
     // res.send(req.body);
-    const updatedNudge = db.Nudge.findByIdAndUpdate(req.params.id, req.body, {new: true});
-    await (await updatedNudge).save();
+    const updatedNudge = await db.Nudge.findByIdAndUpdate(req.params.id, req.body, {new: true});
+    await updatedNudge.save();
     console.log(updatedNudge);
     res.redirect('/profile');
   } catch (err) {
@@ -47,6 +47,13 @@ router.put('/:id', async (req, res) => {
 })
 
 // TODO  delete
-
+router.delete('/:id', async (req, res) => {
+  try {
+    await db.Nudge.findByIdAndDelete(req.params.id);
+    res.redirect('/profile');
+  } catch (err) {
+    res.send(err);
+  }
+})
 
 module.exports = router;

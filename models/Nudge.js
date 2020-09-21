@@ -33,7 +33,7 @@ nudgeSchema.methods.scheduleNudge = function() {
   const job = new CronJob(cronString, () => {
     console.log(this.taskName);
   })
-  console.log(job);
+  // console.log(job);
   // job.start();
 }
 

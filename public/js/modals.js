@@ -12,4 +12,6 @@ const editNudge = function(nudge) {
     $('form[name="edit-nudge"] input[name="taskDescription"]').val(nudge.description);
   }
   $('form[name="edit-nudge"] input[name="scheduledFor"]').val(nudge.start); 
+
+  $('form[name="delete-nudge"').attr('action', `/nudges/${nudge.id}?_method=DELETE`);
 }
