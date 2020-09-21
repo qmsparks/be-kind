@@ -16,9 +16,14 @@ typewriter
 const checkVal = () => {
     setInterval(function () {
         if (answer.val() !== '') {
-            btn.css('visibility', 'visible');
-            clearInterval();
+            btn.css('opacity', '1');
+        } else {
+            btn.css('opacity', '0');
         }
+
+        btn.on('mousedown', () => {
+            clearInterval();
+        });
     }, 300);
 }
 
