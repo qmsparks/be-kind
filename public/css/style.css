@@ -16,6 +16,31 @@ nav {
     flex-flow: row nowrap;
 }
 
+.cta-btn {
+  width: fit-content;
+  padding: 10px 15px;
+  border-radius: 30px;
+  color: white;
+  font-weight: bolder;
+  background-color: coral;
+  cursor: pointer;
+  border: none;
+  transition: all .2s;
+}
+
+.cta-btn:hover {
+  background-color: rgb(228, 92, 42);
+}
+
+.cta-btn:active {
+    color: coral;
+    background-color: white;
+}
+
+.cta-btn:focus {
+  outline: 0;
+}
+
 nav #links {
     display: flex;
     flex-direction: row nowrap;
