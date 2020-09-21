@@ -2,28 +2,22 @@
 <html lang="en">
 
 <head>
-    <% include('./partials/baseHead.ejs') %>
+    <%- include('./partials/baseHead') %>
     <title>Home</title>
 </head>
 
 <body>
-    <div>
-        What's something you wish someone would say to you?
+    <div id="first-message">
+        <div>
+            <p id="question">
+                What's something you wish someone would say to you?
+            </p>
+        </div>
+        <form action="/messages" method="POST">
+            <textarea name="content" id="answer" cols="30" rows="10" autofocus></textarea></br>
+            <input type="submit" class="btn" value="Say it">
+        </form>
     </div>
-    <form action="/messages" method="POST">
-        <textarea name="content" id="home_message" cols="30" rows="10"></textarea></br>
-        <input type="submit" value="Say it">
-    </form>
-
-    <% if (user) { %>
-    <p>Welcome, <%= user.name %></p>
-    <form action="/logout?_method=DELETE" method="POST">
-        <input type="submit" value="Logout">
-    </form>
-    <% } else { %>
-    <a href="/login">Login</a>
-    <a href="/sign-up">Register</a>
-    <% } %>
 </body>
 
 </html>
