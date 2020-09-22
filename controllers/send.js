@@ -3,6 +3,9 @@ const router = express.Router();
 const CronJob = require('cron').CronJob;
 const db = require('../models');
 
+const user = process.env.TWILIO_ACCOUNT_SID;
+const token = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(user, token);
 
 // ANCHOR routes
 router.post('/message', async (req, res) => {
