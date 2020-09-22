@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const CronJob = require('cron').CronJob;
+const twilio = require('twilio');
 const db = require('../models');
 
 const user = process.env.TWILIO_ACCOUNT_SID;
 const token = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(user, token);
+const client = twilio(user, token);
 
 // ANCHOR routes
+// send a message route
 router.post('/message', async (req, res) => {
     if (!req.session.currentUser) return res.redirect('login');
 

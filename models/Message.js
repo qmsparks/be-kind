@@ -10,6 +10,10 @@ const messageSchema = new Schema({
     type: String,
     required: true
   },
+  cronString: {
+    type: String,
+    default: '',
+  },
   receiveDaily: {
     type: Boolean,
     default: false
