@@ -8,8 +8,9 @@
 }
 
 body {
-  background-image: url('../images/pexels-lisa-fotios-1083822.jpg');
+  background-image: url('../images/peaceful-lake-1920×1080.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, .3);
   background-size: cover;
 }
