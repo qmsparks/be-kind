@@ -41,7 +41,7 @@ router.post('/sign-up', async (req, res) => {
     console.log('New User: ' + newUser);
 
     if (req.session.heldMessage) {
-      newUser.messages.push(req.session.heldMessage.id);
+      newUser.messages.push(req.session.heldMessage._id);
       await newUser.save();
       req.session.destroy();
     }
