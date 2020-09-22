@@ -3,8 +3,9 @@ const router = express.Router();
 
 
 const db = require('../models');
-const { response } = require('express');
-const { findByIdAndUpdate } = require('../models/User');
+// const { response } = require('express');
+// const { findByIdAndUpdate } = require('../models/User');
+const  CronJob  = require('cron').CronJob;
 
 // create 
 router.post('/', async (req, res) => {
@@ -13,9 +14,27 @@ router.post('/', async (req, res) => {
     createdNudge.getCronString();
     await createdNudge.save();
 
-    await db.Job.create();
-
     // createdNudge.setCronJob();
+    // createdNudge.job.start();
+
+    createdNudge.job = await new CronJob(createdNudge.cronString, function(){
+      console.log('Hello');
+    })
+
+    createdNudge.job.start();
+    // await createdNudge.save();
+
+    
+    // const newJob = createdNudge.setCronJob();
+
+    // console.log(newJob);
+
+    // await db.Job.create({job: {newJob}});
+
+    // await db.Job.create({job: new CronJob(createdNudge.cronString, function(){
+    //   console.log('hello');
+    // })});
+
     // createdNudge.job.start();
 
     const currentUser = await db.User.findById(req.session.currentUser.id);
@@ -58,6 +77,8 @@ router.delete('/:id', async (req, res) => {
 
     const nudgeToDelete = await db.Nudge.findById(req.params.id);
     console.log('logged from the delete route, before deleting', nudgeToDelete);
+
+    nudgeToDelete.job.stop();
 
     await db.Nudge.findByIdAndDelete(req.params.id);
     // TODO go back and wipe these from the user's array when they're deleted

@@ -57,9 +57,11 @@ app.use(session({
 // }
 
 
-// const checkJobs = new CronJob('* * * * *', async () => {
+const checkNudges = new CronJob('* * * * *', async () => {
+  const allNudges = await db.Nudge.find({});
 
-// })
+
+})
 
 
 

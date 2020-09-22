@@ -21,7 +21,7 @@ const nudgeSchema = new Schema({
     required: true
   },
   cronString: String,
-  job: Object,
+  job: {type: Object, default: {}}
 }, {
   timestamps: true
 });
@@ -29,18 +29,18 @@ const nudgeSchema = new Schema({
 nudgeSchema.methods.getCronString = function() {
   // this.cronString = getCronValues(this.scheduledFor);
   this.cronString = '* * * * * *';
-  console.log(this);
 }
 
-nudgeSchema.methods.setCronJob = async function() {
-  const taskName = this.taskName;
-  const taskDescription = this.taskDescription;
-  this.job = new CronJob(this.cronString, function(){
-    console.log(taskName);
-    if(taskDescription) console.log(taskDescription);
-  })
-  await this.save();
-}
+// nudgeSchema.methods.setCronJob = function() {
+//   const taskName = this.taskName;
+//   const taskDescription = this.taskDescription;
+//   job = new CronJob(this.cronString, function(){
+//     console.log(taskName);
+//     if(taskDescription) console.log(taskDescription);
+//   });
+//   // return job;
+// }
+
 
 
 /**
