@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,14 +8,31 @@
 }
 
 body {
-    background-color: rgb(22, 23, 24);
-    background-blend-mode: lighten;
-    background-size: cover;
+  background-image: url('../images/pexels-lisa-fotios-1083822.jpg');
+  background-size: cover;
+  background-color: rgba(0, 0, 0, .3);
+  background-size: cover;
 }
 
 nav {
     display: flex;
     flex-flow: row nowrap;
+}
+
+#home-nav {
+  color: white;
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  /* border: 1px solid white; */
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+#welcome {
+  font-family: 'Roboto', sans-serif;
+  align-self: center;
+  padding-right: 10px;
 }
 
 .cta-btn {
@@ -46,11 +65,29 @@ nav #links {
     flex-direction: row nowrap;
 }
 
+.nav-link {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3rem;
+  padding-right: 20px;
+  color: #ccc;
+  transition: all .2s;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.nav-link:active {
+  color: rgb(228, 92, 42);
+}
+
 
 #first-message {
   width: 50%;
   margin: 30px auto;
   padding-top: 30px;
+  /* border: 1px solid white; */
 }
 
 #first-message input {
@@ -60,38 +97,49 @@ nav #links {
 
 #question {
   margin-top: 100px;
-  font-family: helvetica;
-  font-size: 2rem;
-  color: darkseagreen;
+  font-family: 'Baloo Tammudu 2', cursive;
+  font-size: 3rem;
+  color: white;
 }
 
 #answer {
-  background-color: rgb(22, 23, 24);
-  margin-top: 60px;
-  font-family: helvetica;
+  background-color: rgba(256, 256, 256, 0);
+  margin-top: 30px;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
   font-size: 2rem;
-  color: white;
+  font-style: italic;
+  color: #eeeeee;
+  opacity: 0;
+  border: 1px solid #646464;
+  transition: opacity 1s linear .2s;
 }
+
+#say-it {
+  margin: 10px auto;
+  /* border: 1px solid white; */
+  text-align: right;
+}
+
 
 .btn {
   width: fit-content;
-  padding: 10px 20px;
+  padding: 5px 20px 0px 20px;
   margin: 20px;
   color: white;
   font-size: 1.2rem;
-  font-family: Arial, Helvetica, sans-serif;
-  border-radius: 5px;
+  font-family: 'Baloo Tammudu 2', cursive;
   background-color: rgba(256, 256, 256, 0);
-  border-width: 3px;
+  border-width: 1px;
   border-style: solid;
   border-color: rgba(256, 256, 256, 0.7);
   transition: background-color 0.2s, border-color 0.2s;
   cursor: pointer;
 }
 
+
 .btn:hover {
   background-color: rgba(256, 256, 256, 0.7);
-  font-weight: bold;
   color: rgb(22, 23, 24);
 }
 
@@ -105,6 +153,7 @@ nav #links {
 }
 
 textarea {
+    padding: 20px;
     border: none;
     width: 100%;
     overflow: auto;

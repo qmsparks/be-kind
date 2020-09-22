@@ -9,9 +9,11 @@ var typewriter = new Typewriter(app, {
 });
 
 typewriter
-    .pauseFor(2500)
+    .pauseFor(1000)
     .typeString('Write something kind to yourself')
     .start();
+
+
 
 const checkVal = () => {
     setInterval(function () {
@@ -27,6 +29,11 @@ const checkVal = () => {
     }, 300);
 }
 
-checkVal();
+
+setTimeout(() => {
+    answer.css('opacity', '1');
+    checkVal();
+}, 4000)
+
 
 
