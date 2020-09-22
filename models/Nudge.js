@@ -20,21 +20,21 @@ const nudgeSchema = new Schema({
     type: Date,
     required: true
   },
-  cronString: String
+  cronString: String,
 }, {
   timestamps: true
 });
 
 nudgeSchema.methods.getCronString = async function() {
-  // console.log('New nudge scheduled for: ');
   this.cronString = getCronValues(this.scheduledFor);
-  // this.cronString = '* * * * * ';
+  // this.cronString = '* * * * * *';
 
-  this.job = new CronJob(this.cronString, () => {
-    console.log('A nudge has been scheduled');
+  const job = new CronJob(this.cronString, () => {
+    console.log(this.taskName);
   })
-  console.log(this.job);
+  job.start();
 }
+
 
 
 /**
@@ -48,10 +48,8 @@ const getCronValues = (date) => {
   const dayOfMonth = date.getDate();
   const month = date.getMonth() + 1;
   const dayOfWeek = date.getDay();
-  return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
+  return `${minute} ${hour} * * *`
 }
-
-
 
 const Nudge = mongoose.model('Nudge', nudgeSchema);
 

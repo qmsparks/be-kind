@@ -4,7 +4,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-// const CronJob = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 
 // INTERNAL MODULES
 const controllers = require('./controllers');
@@ -17,16 +17,11 @@ const app = express();
 const PORT = 3000;
 app.set('view engine', 'ejs');
 
-// const startCronJobs = async function(req, res, next) {
-
-//   next();
-// }
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
-// app.use(startCronJobs);
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.originalUrl}`);
   next();
@@ -43,7 +38,23 @@ app.use(session({
   }
 }));
 
+const startCronJobs = async function() {
+  console.log('Scheduling cron jobs on server start');
+  const allNudges = await db.Nudge.find({});
+  const unsentMessages = await db.Message.find({sent: false});
 
+  allNudges.forEach(nudge => {
+    const job = new CronJob(nudge.cronString, () => {
+      console.log(nudge.taskName);
+    })
+    job.start();
+  });
+
+  // TODO
+  unsentMessages.forEach(message => {
+    console.log('Now starting job based on previously calculated schedule')
+  })
+}
 
 
 // ROUTES
@@ -57,5 +68,6 @@ app.use('/profile', controllers.profile);
 app.use('/send', controllers.send);
 
 app.listen(PORT, () => {
+  startCronJobs();
   console.log(`Now listening for requests on port ${PORT}`);
 });
