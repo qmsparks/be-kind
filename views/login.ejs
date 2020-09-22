@@ -2,18 +2,22 @@
 <html lang="en">
 
 <head>
-    <% include('./partials/baseHead.ejs') %>
+    <%- include('./partials/baseHead') %>
     <title>Login</title>
 </head>
 
 <body>
-    <form action="/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="email" name="email" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" required>
-        <input type="submit" value="login">
-    </form>
+    <%- include('./partials/login-nav')  %>
+    <div id="login-container">
+        <h2>Login</h2>
+        <form action="/login" id="login-form" method="POST">
+            <label for="email">Email</label>
+            <input class="field" type="email" name="email" required>
+            <label for="password">Password</label>
+            <input class="field" type="password" name="password" required>
+            <input type="submit" class="btn" value="Sign in">
+        </form>
+    </div>
 </body>
 
 </html>
