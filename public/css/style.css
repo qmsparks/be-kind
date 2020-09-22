@@ -8,7 +8,7 @@
 }
 
 body {
-  background-image: url('../images/peaceful-lake-1920×1080.jpg');
+  background-image: url('../images/pexels-elijah-o\'donnell-3473569.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, .3);
@@ -42,18 +42,18 @@ nav {
   border-radius: 30px;
   color: white;
   font-weight: bolder;
-  background-color: coral;
+  background-color: mediumseagreen;
   cursor: pointer;
   border: none;
   transition: all .2s;
 }
 
 .cta-btn:hover {
-  background-color: rgb(228, 92, 42);
+  background-color: rgb(49, 141, 91);
 }
 
 .cta-btn:active {
-    color: coral;
+    color: mediumseagreen;
     background-color: white;
 }
 
@@ -121,6 +121,81 @@ nav #links {
   /* border: 1px solid white; */
   text-align: right;
 }
+
+
+#login-container {
+  width: 20%;
+  margin: 10% auto;
+  border: 1px solid white;
+  background-color: #eee;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 5px;
+}
+
+#login-container h2 {
+  color: darkslategray;
+  text-align: center;
+  padding-top: 25px;
+  font-family: 'Baloo Tammudu 2', cursive;
+}
+
+#login-form {
+  display: flex;
+  flex-flow: column nowrap;
+  color: white;
+  margin-top: 20px;
+  height: 400px;
+}
+
+#login-form label,
+input {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+#login-form label {
+  color: #888;
+}
+
+#login-form input.field {
+  height: 40px;
+  font-size: 1rem;
+  color: #555;
+  border: none;
+  border-bottom: 1px solid gray;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+#login-form input:focus {
+  outline: none;
+}
+
+#login-form .btn {
+  width: 80%;
+  margin: 75px auto 0px auto;
+  border-radius: 25px;
+  background-color: mediumseagreen;
+  color: white;
+}
+
+#login-form .btn:hover {
+  background-color: rgb(49, 141, 91);
+}
+
+#login-form .btn:active {
+  background-color: white;
+  color: mediumseagreen;
+}
+
+
+
+
+
+
 
 
 .btn {
