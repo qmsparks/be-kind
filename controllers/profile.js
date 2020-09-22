@@ -37,7 +37,9 @@ router.put('/', async (req, res) => {
     await db.User.findByIdAndUpdate(req.session.currentUser.id, req.body, { new: true });
     res.redirect('/profile');
   } catch (error) {
-    res.send(error);
+    res.send({
+      message: 'Error: ' + error
+    });
   }
 })
 
@@ -50,7 +52,7 @@ router.delete('/', async (req, res) => {
     await req.session.destroy();
     res.redirect('/');
   } catch (error) {
-
+    message: 'Error: ' + error
   }
 })
 

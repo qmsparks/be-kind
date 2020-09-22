@@ -1,53 +1,23 @@
-// ANCHOR Modules and Constants
-// External Modules
 const express = require('express');
 const router = express.Router();
-
-// Internal Modules
+const CronJob = require('cron').CronJob;
 const db = require('../models');
 
 
+// ANCHOR routes
+router.post('/message', async (req, res) => {
+    if (!req.session.currentUser) return res.redirect('login');
 
-
-
-// ANCHOR Routes
-// create and push message to user messages
-router.post('/', async (req, res) => {
-    const user = req.session.currentUser;
-
-    if (!user) {
-        const newMessage = await db.Message.create(req.body);
-        req.session.heldMessage = newMessage;
-
-        res.render('sign-up', {
-            myMessage: req.session.heldMessage
-        });
-    } else {
-        try {
-            req.body.user = user.id;
-            const message = await db.Message.create(req.body);
-            console.log(message);
-
-            db.User.findByIdAndUpdate(
-                message.user,
-                {
-                    $push: {
-                        messages: message
-                    }
-                }, (err, updatedItem) => {
-                    if (err) return res.send(err);
-                    console.log(updatedItem);
-                    res.render('profile', {
-                        user: updatedItem
-                    });
-                });
-            schedule(user, true);
-        } catch (error) {
-            console.log(error + ': Internal server error!');
-        }
+    const user = await db.User.findById(req.session.currentUser.id);
+    console.log(user);
+    try {
+        schedule(user, true);
+    } catch (error) {
+        res.send({
+            message: error
+        })
     }
-});
-
+})
 
 
 // ANCHOR Helper Functions
@@ -159,8 +129,9 @@ const schedule = async (user, message = true) => {
 
         const job = new CronJob('* * * * * *', () => {
             console.log('A message has been logged');
-            // sendMessage(currentTransmission.content);
+            sendMessage(currentTransmission.content);
         });
+
         job.start();
     } catch (error) {
         console.log(error);
@@ -168,7 +139,4 @@ const schedule = async (user, message = true) => {
 }
 
 
-
-
-// ANCHOR Exports
 module.exports = router;

@@ -12,13 +12,17 @@ const userSchema = new Schema({
   },
   phone: {
     type: String,
-    unique: true
+    // NOTE do not need this property until we're dealing with phones.
+    // unique: true
   },
   password: {
     type: String,
     required: true
   },
-  sendOnce: Boolean,
+  receiveDailyMessages: {
+    type: Boolean,
+    default: false
+  },
   messages: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Message'
@@ -26,7 +30,7 @@ const userSchema = new Schema({
   nudges: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Nudge'
-  }]
+  }],
 }, {
   timestamps: true
 });
