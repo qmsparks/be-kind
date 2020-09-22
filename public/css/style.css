@@ -214,7 +214,8 @@ textarea {
 
 /* NUDGEBOARD CSS */
 #nudgeboard-wrapper{
-  width: 35%
+  width: 500px;
+  overflow: hidden;
 }
 
 ul {
@@ -226,6 +227,10 @@ ul {
 }
 
 #nudge-modal {
+  display: none;
+}
+
+#edit-nudge {
   display: none;
 }
 

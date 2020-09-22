@@ -47,8 +47,8 @@ router.put('/', async (req, res) => {
 router.delete('/', async (req, res) => {
   try {
     const deletedUser = await db.User.findByIdAndDelete(req.session.currentUser.id);
-    await db.Message.remove({ user: deletedUser._id });
-    await db.Nudge.remove({ user: deletedUser._id });
+    await db.Message.deleteMany({ user: deletedUser._id });
+    await db.Nudge.deleteMany({ user: deletedUser._id });
     await req.session.destroy();
     res.redirect('/');
   } catch (error) {

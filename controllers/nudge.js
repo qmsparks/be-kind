@@ -12,6 +12,12 @@ router.post('/', async (req, res) => {
     const createdNudge = await db.Nudge.create(req.body);
     createdNudge.getCronString();
     await createdNudge.save();
+
+    await db.Job.create();
+
+    // createdNudge.setCronJob();
+    // createdNudge.job.start();
+
     const currentUser = await db.User.findById(req.session.currentUser.id);
     currentUser.nudges.push(createdNudge._id);
     await currentUser.save();
@@ -37,7 +43,6 @@ router.get('/api', (req, res) => {
 // ANCHOR update
 router.put('/:id', async (req, res) => {
   try {
-    // res.send(req.body);
     const updatedNudge = await db.Nudge.findByIdAndUpdate(req.params.id, req.body, {new: true});
     await updatedNudge.save();
     console.log(updatedNudge);
@@ -50,11 +55,16 @@ router.put('/:id', async (req, res) => {
 // ANCHOR  delete
 router.delete('/:id', async (req, res) => {
   try {
+
+    const nudgeToDelete = await db.Nudge.findById(req.params.id);
+    console.log('logged from the delete route, before deleting', nudgeToDelete);
+
     await db.Nudge.findByIdAndDelete(req.params.id);
+    // TODO go back and wipe these from the user's array when they're deleted
     res.redirect('/profile');
   } catch (err) {
     res.send(err);
-  }
+  } 
 })
 
 module.exports = router;
