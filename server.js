@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const CronJob = require('cron').CronJob;
+// const db = require('./models');
 
 // INTERNAL MODULES
 const controllers = require('./controllers');
@@ -37,31 +38,6 @@ app.use(session({
   }
 }));
 
-// NOTE leaving this here but I think we can accomplish this in the /controllers/nudge like i did with controllers/message
-// const startCronJobs = async function() {
-//   console.log('Scheduling cron jobs on server start');
-//   const allNudges = await db.Nudge.find({});
-//   const unsentMessages = await db.Message.find({sent: false});
-
-//   allNudges.forEach(nudge => {
-//     const job = new CronJob(nudge.cronString, () => {
-//       console.log(nudge.taskName);
-//     })
-//     job.start();
-//   });
-
-//   // TODO
-//   unsentMessages.forEach(message => {
-//     console.log('Now starting job based on previously calculated schedule')
-//   })
-// }
-
-
-// const checkJobs = new CronJob('* * * * *', async () => {
-
-// })
-
-
 
 // ROUTES
 app.get('/about', (req, res) => {
@@ -86,7 +62,7 @@ app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
-app.use('/send', controllers.send);
+// app.use('/send', controllers.send);
 
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);
