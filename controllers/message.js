@@ -11,22 +11,25 @@ const db = require('../models');
 // Instanced Modules 
 const router = express.Router();
 
-// const user = process.env.TWILIO_ACCOUNT_SID;
-// const token = process.env.TWILIO_AUTH_TOKEN;
-// const clientPhone = process.env.TWILIO_PHONE_NUMBER;
-// const client = twilio(user, token);
+// Constants
+const TWILIO_USER = process.env.TWILIO_ACCOUNT_SID;
+const TWILIO_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const TWILIO_PHONE = process.env.TWILIO_PHONE_NUMBER;
+const client = twilio(TWILIO_USER, TWILIO_TOKEN);
+
+
 
 
 
 // ANCHOR Routes
 // create and push message to user messages
 router.post('/', async (req, res) => {
-    const loggedIn = req.session.currentUser.id ? true : false;
+    const loggedIn = req.session.currentUser === undefined ? false : true;
     req.body.user = loggedIn ? req.session.currentUser.id : undefined;
 
     const message = await db.Message.create(req.body);
     const createDate = getCronValues(message.updatedAt);
-    const cronString = await getRandomTimeOfWeek(createDate);
+    const cronString = getRandomTimeOfWeek(createDate);
     message.cronString = cronString;
 
     if (!loggedIn) {
@@ -48,7 +51,7 @@ router.post('/', async (req, res) => {
                     });
                 });
 
-            startCronJob(message);
+            sendMsg(message);
 
         } catch (error) {
             console.log(error + ': Internal server error!');
@@ -60,22 +63,28 @@ router.post('/', async (req, res) => {
 
 
 
-
-const startCronJob = async message => {
+// ANCHOR Helper Functions
+/**
+ * @function sendMsg();
+ * @description sends message using composeMsg as a helper.
+ * @param {Message Object} message 
+ * TODO MORE TESTING
+ */
+const sendMsg = async message => {
     try {
         const user = await db.User.findById(message.user);
-        const job = new CronJob('13 13 23 8 3', function () {
+        const job = new CronJob('45 13 23 8 3', function () {
             composeMsg(
                 user.phone,
                 message.content,
-                clientPhone
+                TWILIO_PHONE
             );
-        })
+        });
 
         job.start();
 
         console.log(`Message was created at/on: ${message.updatedAt}`)
-        console.log(`Message will execute at ${parseCron('13 13 23 8 3')}`);
+        console.log(`Message will execute at ${parseCron('45 13 23 8 3')}`);
 
     } catch (err) {
         console.log(err);
@@ -84,7 +93,15 @@ const startCronJob = async message => {
 
 
 
-// ANCHOR Helper Functions
+
+
+/**
+ * @function composeMsg()
+ * @description composes the message to be sent using sendMsg.
+ * @param {String} to phone number to send text to. 
+ * @param {String} body content of message
+ * @param {String} from phone number to send text from.
+ */
 const composeMsg = async (to, body, from) => {
     try {
         const message = await client.messages.create({
@@ -103,23 +120,42 @@ const composeMsg = async (to, body, from) => {
 
 
 
-const sendMessage = (cronValues, content) => {
-    console.log(content);
+/**
+ * @function parseCron()
+ * @description parses a cron expression into a date string.
+ * @param {String} expression cron expression to be parsed.
+ */
+const parseCron = expression => {
+    let dateItems = expression.split(' ')
+        .map(item => parseInt(item));
+    dateItems[3] += 1;
+
+    dateItems = dateItems.join(' ');
+
+    try {
+        const interval = parser.parseExpression(dateItems);
+        return `Date: ${interval.next().toString()}`;
+    } catch (err) {
+        console.log(err);
+    }
 }
+
+
 
 
 
 /**
  * @function randomNumInRange()
  * @description returns a random number within a specified range.
- * @param {Integer} min minimum number in range 
- * @param {Integer} max maximum number in range 
+ * @param {Number} min minimum number in range 
+ * @param {Number} max maximum number in range 
  */
 const randomNumInRange = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
 }
+
 
 
 
@@ -140,6 +176,8 @@ const getCronValues = (date) => {
 
 
 
+
+
 /**
  * @function getRandomTimeOfDay()
  * @description generates a cron string that will run every day at a random hour
@@ -153,11 +191,12 @@ const getRandomTimeOfDay = () => {
 
 
 
+
 /**
  * @function getRandomTimeOfWeek()
  * @description returns a cron string that represents a random time between when a message was created
  * and seven days after the message was created.
- * @param {*} cronValues 
+ * @param {String} cronValues 
  */
 const getRandomTimeOfWeek = (cronValues) => {
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -187,53 +226,6 @@ const getRandomTimeOfWeek = (cronValues) => {
     return valNums.join(' ');
 }
 
-
-
-
-const parseCron = expression => {
-    let dateItems = expression.split(' ')
-        .map(item => parseInt(item));
-    dateItems[3] += 1;
-
-    dateItems = dateItems.join(' ');
-
-    try {
-        const interval = parser.parseExpression(dateItems);
-        return `Date: ${interval.next().toString()}`;
-    } catch (err) {
-        console.log(err);
-    }
-}
-
-// const schedule = async (user, message = true) => {
-//     let currentTransmission;
-
-//     try {
-//         if (message) {
-//             for (let i = 0; i < user.messages.length; i++) {
-//                 currentTransmission = await db.Message.findById(user.messages[i]);
-//                 if (!currentTransmission.sent) {
-//                     break;
-//                 }
-//             }
-//         } else {
-//             for (let i = 0; i < user.nudges.length; i++) {
-//                 currentTransmission = await db.Nudge.findById(user.nudges[i]);
-//                 if (!currentTransmission.sent) {
-//                     break;
-//                 }
-//             }
-//         }
-
-//         const job = new CronJob('* * * * * *', () => {
-//             console.log('A message has been logged');
-//             // sendMessage(currentTransmission.content);
-//         });
-//         job.start();
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 
 

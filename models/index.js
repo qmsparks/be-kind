@@ -28,5 +28,4 @@ module.exports = {
     User: require('./User'),
     Message: require('./Message'),
     Nudge: require('./Nudge'),
-    Job: require('./Job')
 }
