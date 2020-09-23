@@ -1,12 +1,19 @@
 // ANCHOR Modules and Constants
 // External Modules
 const express = require('express');
-const router = express.Router();
+const twilio = require('twilio');
+const { CronJob } = require('cron');
 
 // Internal Modules
 const db = require('../models');
 
+// Instanced Modules 
+const router = express.Router();
 
+// const user = process.env.TWILIO_ACCOUNT_SID;
+// const token = process.env.TWILIO_AUTH_TOKEN;
+// const clientPhone = process.env.TWILIO_PHONE_NUMBER;
+// const client = twilio(user, token);
 
 
 
@@ -16,24 +23,29 @@ router.post('/', async (req, res) => {
     const user = req.session.currentUser;
 
     if (!user) {
-        const newMessage = await db.Message.create(req.body);
-        req.session.heldMessage = newMessage;
+        const message = await db.Message.create(req.body);
+        const createDate = await getCronValues(message.updatedAt);
+        const cronString = await getRandomTimeOfWeek(createDate);
+        req.body.cronString = cronString;
+        req.session.heldMessage = message;
 
         res.render('sign-up', {
             myMessage: req.session.heldMessage
         });
     } else {
         try {
-            req.body.user = user.id;
+            req.body.user = await user.id;
             const message = await db.Message.create(req.body);
-            console.log(message);
+            const createDate = await getCronValues(message.updatedAt);
+            const cronString = await getRandomTimeOfWeek(createDate);
+            req.body.cronString = cronString;
 
             db.User.findByIdAndUpdate(
                 message.user,
                 {
                     $push: {
                         messages: message
-                    }
+                    },
                 }, (err, updatedItem) => {
                     if (err) return res.send(err);
                     console.log(updatedItem);
@@ -41,7 +53,17 @@ router.post('/', async (req, res) => {
                         user: updatedItem
                     });
                 });
-            schedule(user, true);
+
+            const job = new CronJob(('45 14 22 9 2'), function () {
+                composeMsg(
+                    '+12816827144',
+                    message.content,
+                    clientPhone
+                )
+            });
+
+            job.start();
+
         } catch (error) {
             console.log(error + ': Internal server error!');
         }
@@ -50,7 +72,27 @@ router.post('/', async (req, res) => {
 
 
 
+
+
 // ANCHOR Helper Functions
+const composeMsg = async (to, body, from) => {
+    try {
+        const message = await client.messages.create({
+            to: to,
+            body: body,
+            from: from
+        });
+        console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
+        console.log(`Message SID: ${message.sid}`);
+    } catch (err) {
+        console.log('ERROR: ' + err);
+    }
+}
+
+
+
+
+
 const sendMessage = (cronValues, content) => {
     console.log(content);
 }
@@ -137,35 +179,35 @@ const getRandomTimeOfWeek = (cronValues) => {
 
 
 
-const schedule = async (user, message = true) => {
-    let currentTransmission;
+// const schedule = async (user, message = true) => {
+//     let currentTransmission;
 
-    try {
-        if (message) {
-            for (let i = 0; i < user.messages.length; i++) {
-                currentTransmission = await db.Message.findById(user.messages[i]);
-                if (!currentTransmission.sent) {
-                    break;
-                }
-            }
-        } else {
-            for (let i = 0; i < user.nudges.length; i++) {
-                currentTransmission = await db.Nudge.findById(user.nudges[i]);
-                if (!currentTransmission.sent) {
-                    break;
-                }
-            }
-        }
+//     try {
+//         if (message) {
+//             for (let i = 0; i < user.messages.length; i++) {
+//                 currentTransmission = await db.Message.findById(user.messages[i]);
+//                 if (!currentTransmission.sent) {
+//                     break;
+//                 }
+//             }
+//         } else {
+//             for (let i = 0; i < user.nudges.length; i++) {
+//                 currentTransmission = await db.Nudge.findById(user.nudges[i]);
+//                 if (!currentTransmission.sent) {
+//                     break;
+//                 }
+//             }
+//         }
 
-        const job = new CronJob('* * * * * *', () => {
-            console.log('A message has been logged');
-            // sendMessage(currentTransmission.content);
-        });
-        job.start();
-    } catch (error) {
-        console.log(error);
-    }
-}
+//         const job = new CronJob('* * * * * *', () => {
+//             console.log('A message has been logged');
+//             // sendMessage(currentTransmission.content);
+//         });
+//         job.start();
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 
 

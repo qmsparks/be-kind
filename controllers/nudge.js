@@ -4,17 +4,20 @@ const router = express.Router();
 
 const db = require('../models');
 const CronJob  = require('cron').CronJob;
+
 // create 
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
     createdNudge.getCronString();
     await createdNudge.save();
-
-    setJob(createdNudge);
+    const newJob = await createdNudge.getCronJob();
+    console.log(newJob);
 
     const currentUser = await db.User.findById(req.session.currentUser.id);
     currentUser.nudges.push(createdNudge._id);
+    await currentUser.save();
+    currentUser.cronJobs.push(newJob);
     await currentUser.save();
     res.redirect('/profile');
   } catch (error) {
@@ -50,12 +53,6 @@ router.put('/:id', async (req, res) => {
 // ANCHOR  delete
 router.delete('/:id', async (req, res) => {
   try {
-
-    // const nudgeToDelete = await db.Nudge.findById(req.params.id);
-    // console.log('logged from the delete route, before deleting', nudgeToDelete);
-
-    // nudgeToDelete.job.stop();
-
     await db.Nudge.findByIdAndDelete(req.params.id);
     // TODO go back and wipe these from the user's array when they're deleted
     res.redirect('/profile');
@@ -63,28 +60,6 @@ router.delete('/:id', async (req, res) => {
     res.send(err);
   } 
 })
-
-const setJob = async function(nudge) {
-  try {
-  const taskName = nudge.taskName;
-  const taskDescription = nudge.taskDescription;
-  const cronString = nudge.cronString;
-
-  const cron = {
-    testString: 'hewwo?',
-    job: function() {
-      const job = new CronJob(cronString, function() {
-        console.log(taskName);
-        if (taskDescription) console.log(taskDescription);
-      })
-    }
-  }
-  db.Job.create({'cron': cron});
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 
 
 module.exports = router;

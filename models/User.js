@@ -31,6 +31,7 @@ const userSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Nudge'
   }],
+  cronJobs: [Object]
 }, {
   timestamps: true
 });
