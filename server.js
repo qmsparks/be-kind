@@ -8,7 +8,6 @@ const CronJob = require('cron').CronJob;
 
 // INTERNAL MODULES
 const controllers = require('./controllers');
-const db = require('./models');
 
 // INSTANCED MODULES
 const app = express();
@@ -38,8 +37,7 @@ app.use(session({
   }
 }));
 
-// NOTE leaving this here because i don't want to delete your code before you get a chance to review it but I think we can accomplish this in the /controllers/nudge like i did with controllers/message
-ß
+// NOTE leaving this here but I think we can accomplish this in the /controllers/nudge like i did with controllers/message
 // const startCronJobs = async function() {
 //   console.log('Scheduling cron jobs on server start');
 //   const allNudges = await db.Nudge.find({});
@@ -66,9 +64,24 @@ app.use(session({
 
 
 // ROUTES
-app.get('/', (req, res) => {
-  res.render('index', { user: req.session.currentUser });
+app.get('/about', (req, res) => {
+  res.render('about', {
+    user: req.session.currentUser
+  });
 });
+
+app.get('/contact', (req, res) => {
+  res.render('contact', {
+    user: req.session.currentUser
+  });
+});
+
+app.get('/', (req, res) => {
+  res.render('index', {
+    user: req.session.currentUser
+  });
+});
+
 app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
