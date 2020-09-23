@@ -61,6 +61,14 @@ textarea {
 }
 
 
+.page-heading {
+    color: white;
+    font-family: 'Baloo Tammudu 2', cursive;
+    text-align: center;
+    margin-top: 3%;
+}
+
+
 
 /* NUDGEBOARD CSS */
 #nudgeboard-wrapper{
