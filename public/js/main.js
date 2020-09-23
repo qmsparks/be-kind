@@ -1,6 +1,6 @@
 const app = document.getElementById('question');
 const $answer = $('#answer');
-const $btn = $('.btn');
+const $cta_btn = $('.say-it');
 
 
 var typewriter = new Typewriter(app, {
@@ -20,12 +20,12 @@ typewriter
 const checkVal = () => {
     setInterval(function () {
         if ($answer.val() !== '') {
-            $btn.css('opacity', '1');
+            $cta_btn.css('opacity', '1');
         } else {
-            $btn.css('opacity', '0');
+            $cta_btn.css('opacity', '0');
         }
 
-        btn.on('mousedown', () => {
+        $cta_btn.on('mousedown', () => {
             clearInterval();
         });
     }, 300);
