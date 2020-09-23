@@ -34,24 +34,6 @@ nudgeSchema.methods.getCronString = function() {
 
 
 
-nudgeSchema.methods.getCronJob = function() {
-
-  const cronJob = new CronJob(this.cronString, function() {
-    console.log(this.taskName);
-    if (this.taskDescription) console.log(this.taskCescription);
-  })
-
-  const jobObject = {
-    nudgeId: id,
-    job: cronJob
-  }
-
-  return jobObject;
-}
-
-
-
-
 
 /**
  * @function getCronValues()

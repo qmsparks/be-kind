@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+.form-container {
+  width: 20%;
+  margin: 5% auto;
+  border: 1px solid white;
+  background-color: #eee;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 5px;
+}
+
+.form-container h2 {
+  color: darkslategray;
+  text-align: center;
+  padding-top: 25px;
+  font-family: 'Baloo Tammudu 2', cursive;
+}
+
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  color: white;
+  margin-top: 20px;
+}
+
+.form input {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.form input.field {
+  height: 40px;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #555;
+  border: none;
+  border-bottom: 1px solid gray;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.form input:focus {
+  outline: none;
+}
+
+.form .btn {
+  width: 80%;
+  margin: 50px auto 45px auto;
+  border-radius: 25px;
+  background-color: mediumseagreen;
+  color: white;
+}
+
+.form .btn:hover {
+  background-color: rgb(49, 141, 91);
+}
+
+.form .btn:active {
+  background-color: white;
+  color: mediumseagreen;
+}
+

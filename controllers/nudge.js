@@ -11,13 +11,9 @@ router.post('/', async (req, res) => {
     const createdNudge = await db.Nudge.create(req.body);
     createdNudge.getCronString();
     await createdNudge.save();
-    const newJob = await createdNudge.getCronJob();
-    console.log(newJob);
 
     const currentUser = await db.User.findById(req.session.currentUser.id);
     currentUser.nudges.push(createdNudge._id);
-    await currentUser.save();
-    currentUser.cronJobs.push(newJob);
     await currentUser.save();
     res.redirect('/profile');
   } catch (error) {
