@@ -14,6 +14,11 @@ body {
   background-size: cover;
 }
 
+.container {
+  width: 40%;
+  margin: 15px auto;
+}
+
 .btn {
   width: fit-content;
   padding: 5px 20px 0px 20px;
