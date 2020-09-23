@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./partials/baseHead') %>
   <%- include('./partials/nudgeboard.ejs')  %>
   <link rel="stylesheet" href="/css/profile.css">
   <title>Profile</title>
@@ -11,19 +12,24 @@
 
 <body>
   <%- include('./partials/nav') %>
-  <i class="fas fa-user-edit"></i>
-  <h1> <%= user.name %>'s Kind Board</h1>
-  <%- include('./partials/profile-modals/edit-profile')  %>
-  <%- include('./partials/messages') %>
+  <div class="container">
+    <i class="fas fa-user-edit"></i>
+    <h1> <%= user.name %>'s Kind Board</h1>
+    <div class="modals">
+      <%- include('./partials/profile-modals/edit-profile')  %>
+      <%- include('./partials/messages') %>
 
-  <div id="nudgeboard-wrapper">
-    <%- include('./partials/profile-modals/new-nudge')  %>
-    <%- include('./partials/profile-modals/edit-nudge')  %>
-    <div id="calendar">
+      <div id="nudgeboard-wrapper">
+        <%- include('./partials/profile-modals/new-nudge')  %>
+        <%- include('./partials/profile-modals/edit-nudge')  %>
+        <div id="calendar">
+        </div>
+      </div>
+      <%- include('./partials/profile-modals/delete-profile')  %>
     </div>
+
   </div>
 
-  <%- include('./partials/profile-modals/delete-profile')  %>
 
 </body>
 
