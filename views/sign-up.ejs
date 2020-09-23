@@ -2,23 +2,23 @@
 <html lang="en">
 
 <head>
-    <% include('./partials/baseHead.ejs') %>
-    <link rel="stylesheet" href="/css/sign-up.css">
-    <title>sign-up</title>
+    <%- include('./partials/baseHead.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <title>Register</title>
 </head>
 
 <body>
-    <form action="/sign-up" id="register" method="POST">
-        <label for="name">What should we call you?</label>
-        <input type="text" name="name" required>
-        <label for="email">Email</label>
-        <input type="email" name="email" placeholder="email@email.com" required>
-        <label for="phone">Phone Number</label>
-        <input type="string" name="phone" placeholder="e.g. (555) 555-5555">
-        <label for="password">Password</label>
-        <input type="password" name="password">
-        <input type="submit" value="Test">
-    </form>
+    <%- include('./partials/login-nav')  %>
+    <div class="form-container">
+        <h2>Register</h2>
+        <form action="/sign-up" class="form" method="POST">
+            <input type="text" class="field" name="name" placeholder="What should we call you?" required>
+            <input type="email" class="field" name="email" placeholder="Email" required>
+            <input type="text" class="field" name="phone" placeholder="Phone Number" required>
+            <input type="password" class="field" name="password" placeholder="Password" required>
+            <input type="submit" class="btn" value="Sign Up">
+        </form>
+    </div>
 </body>
 
 </html>
