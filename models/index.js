@@ -27,6 +27,5 @@ mongoose.connection.on('disconnected', () => {
 module.exports = {
     User: require('./User'),
     Message: require('./Message'),
-    Nudge: require('./Nudge'),
-    Job: require('./Job')
+    Nudge: require('./Nudge')
 }

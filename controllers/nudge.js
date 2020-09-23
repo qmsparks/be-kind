@@ -9,7 +9,6 @@ const CronJob  = require('cron').CronJob;
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
-
     setCronJob(createdNudge);
 
     const currentUser = await db.User.findById(req.session.currentUser.id);
@@ -50,7 +49,10 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await db.Nudge.findByIdAndDelete(req.params.id);
-    // TODO go back and wipe these from the user's array when they're deleted
+    const user = await db.User.findById(req.session.currentUser.id);
+    await user.nudges.pull(req.params.id);
+    user.save();
+    
     res.redirect('/profile');
   } catch (err) {
     res.send(err);
@@ -77,7 +79,6 @@ const setCronJob = (nudge) => {
   })
   job.start();
 }
-
 
 const getCronValues = (date) => {
   const minute = date.getMinutes();
