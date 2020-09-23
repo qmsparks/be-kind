@@ -2,6 +2,7 @@
 // External Modules
 const express = require('express');
 const twilio = require('twilio');
+const parser = require('cron-parser');
 const { CronJob } = require('cron');
 
 // Internal Modules
@@ -20,25 +21,23 @@ const client = twilio(user, token);
 // ANCHOR Routes
 // create and push message to user messages
 router.post('/', async (req, res) => {
-    const user = req.session.currentUser;
+    const loggedIn = req.session.currentUser;
 
-    if (!user) {
+    if (!loggedIn) {
         const message = await db.Message.create(req.body);
-        const createDate = await getCronValues(message.updatedAt);
+        const createDate = getCronValues(message.updatedAt);
         const cronString = await getRandomTimeOfWeek(createDate);
-        req.body.cronString = cronString;
+        message.cronString = cronString;
         req.session.heldMessage = message;
 
-        res.render('sign-up', {
-            myMessage: req.session.heldMessage
-        });
+        res.render('sign-up');
     } else {
         try {
-            req.body.user = await user.id;
+            req.body.user = await req.session.currentUser.id;
             const message = await db.Message.create(req.body);
-            const createDate = await getCronValues(message.updatedAt);
+            const createDate = getCronValues(message.updatedAt);
             const cronString = await getRandomTimeOfWeek(createDate);
-            req.body.cronString = cronString;
+            message.cronString = cronString;
 
             db.User.findByIdAndUpdate(
                 message.user,
@@ -48,21 +47,29 @@ router.post('/', async (req, res) => {
                     },
                 }, (err, updatedItem) => {
                     if (err) return res.send(err);
-                    console.log(updatedItem);
+
                     res.render('profile', {
                         user: updatedItem
                     });
                 });
 
-            const job = new CronJob(('45 14 22 9 2'), function () {
+            const user = await db.User.findById(req.body.user);
+            console.log(user.phone);
+
+            // NOTE insert cronString after testing is complete.
+            const job = new CronJob('45 12 23 8 3', function () {
                 composeMsg(
-                    '+12816827144',
+                    user.phone,
                     message.content,
                     clientPhone
-                )
+                );
             });
 
             job.start();
+            const createdTime = message.createdAt;
+            const execTime = parseCron('45 12 23 8 3');
+            console.log(`Message was created at/on: ${createdTime}`)
+            console.log(`Message will execute at ${execTime}`);
 
         } catch (error) {
             console.log(error + ': Internal server error!');
@@ -178,6 +185,22 @@ const getRandomTimeOfWeek = (cronValues) => {
 }
 
 
+
+
+const parseCron = expression => {
+    let dateItems = expression.split(' ')
+        .map(item => parseInt(item));
+    dateItems[3] += 1;
+
+    dateItems = dateItems.join(' ');
+
+    try {
+        const interval = parser.parseExpression(dateItems);
+        return `Date: ${interval.next().toString()}`;
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 // const schedule = async (user, message = true) => {
 //     let currentTransmission;

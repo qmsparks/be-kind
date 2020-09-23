@@ -45,6 +45,8 @@ router.post('/sign-up', async (req, res) => {
     if (req.session.heldMessage) {
       newUser.messages.push(req.session.heldMessage._id);
       await newUser.save();
+
+      // FIXME needs to start cron job with message[0]
       req.session.destroy();
     }
 
