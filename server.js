@@ -38,6 +38,8 @@ app.use(session({
   }
 }));
 
+// NOTE leaving this here because i don't want to delete your code before you get a chance to review it but I think we can accomplish this in the /controllers/nudge like i did with controllers/message
+ß
 // const startCronJobs = async function() {
 //   console.log('Scheduling cron jobs on server start');
 //   const allNudges = await db.Nudge.find({});
@@ -74,6 +76,5 @@ app.use('/profile', controllers.profile);
 app.use('/send', controllers.send);
 
 app.listen(PORT, () => {
-  // startCronJobs();
   console.log(`Now listening for requests on port ${PORT}`);
 });
