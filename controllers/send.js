@@ -111,7 +111,6 @@ const getRandomTimeOfWeek = (cronValues) => {
 }
 
 
-
 const schedule = async (user, message = true) => {
     let currentTransmission;
 
@@ -142,6 +141,8 @@ const schedule = async (user, message = true) => {
         console.log(error);
     }
 }
+
+
 
 
 module.exports = router;

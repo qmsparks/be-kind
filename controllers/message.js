@@ -10,10 +10,10 @@ const db = require('../models');
 // Instanced Modules 
 const router = express.Router();
 
-const user = process.env.TWILIO_ACCOUNT_SID;
-const token = process.env.TWILIO_AUTH_TOKEN;
-const clientPhone = process.env.TWILIO_PHONE_NUMBER;
-const client = twilio(user, token);
+// const user = process.env.TWILIO_ACCOUNT_SID;
+// const token = process.env.TWILIO_AUTH_TOKEN;
+// const clientPhone = process.env.TWILIO_PHONE_NUMBER;
+// const client = twilio(user, token);
 
 
 
