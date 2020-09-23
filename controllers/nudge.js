@@ -9,8 +9,8 @@ const CronJob  = require('cron').CronJob;
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
-    createdNudge.getCronString();
-    await createdNudge.save();
+
+    setCronJob(createdNudge);
 
     const currentUser = await db.User.findById(req.session.currentUser.id);
     currentUser.nudges.push(createdNudge._id);
@@ -56,6 +56,37 @@ router.delete('/:id', async (req, res) => {
     res.send(err);
   } 
 })
+
+
+
+
+const setCronJob = (nudge) => {
+  const cronString = getCronValues(nudge.scheduledFor);
+  // const cronString = '* * * * * *'
+  const job = new CronJob(cronString, async function() {
+    try {
+      const scheduledNudge = await db.Nudge.findByIdAndUpdate(nudge._id);
+      if(scheduledNudge) {
+        console.log(scheduledNudge.taskName);
+      } else {
+        job.stop();
+      }
+    } catch (error) {
+      return console.log(error);
+    }
+  })
+  job.start();
+}
+
+
+const getCronValues = (date) => {
+  const minute = date.getMinutes();
+  const hour = date.getHours();
+  const dayOfMonth = date.getDate();
+  const month = date.getMonth() + 1;
+  const dayOfWeek = date.getDay();
+  return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
+}
 
 
 module.exports = router;

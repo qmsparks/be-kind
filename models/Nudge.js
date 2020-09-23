@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const { CronJob } = require('cron');
-// const CronJob = require('cron').CronJob;
 const Schema = mongoose.Schema;
 
 const nudgeSchema = new Schema({
@@ -21,16 +19,20 @@ const nudgeSchema = new Schema({
     type: Date,
     required: true
   },
-  cronString: {type: String, default: '* * * * *'}
+  scheduled: {
+    type: Boolean,
+    default: false
+  }
 },
 {
   timestamps: true
 });
 
-nudgeSchema.methods.getCronString = function() {
-  // this.cronString = getCronValues(this.scheduledFor);
-  this.cronString = '* * * * * *';
-}
+
+// nudgeSchema.methods.getCronString = function() {
+//   this.cronString = getCronValues(this.scheduledFor);
+//   this.save();
+// }
 
 
 

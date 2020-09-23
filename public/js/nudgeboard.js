@@ -29,9 +29,11 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
   views: {
     timeGridOneDay: {
       type: 'timeGrid',
-      dayCount: 1
+      dayCount: 1,
+      slotDuration: '00:15:00'
     }
   },
+  defaultTimedEventDuration: '00:15:00',
   allDaySlot: false,
   dayHeaders: false,
   dateClick: function (info) {
