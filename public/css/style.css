@@ -14,100 +14,6 @@ body {
   background-size: cover;
 }
 
-nav {
-    display: flex;
-    flex-flow: row nowrap;
-}
-
-#login-nav {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  margin-right: 30px;
-  margin-left: 30px;
-}
-
-.logo {
-  color: white;
-  font-family: 'Baloo Tammudu 2', cursive;
-  font-size: 2rem;
-  align-self: center;
-}
-
-#welcome {
-  font-family: 'Roboto', sans-serif;
-  align-self: center;
-  padding-right: 10px;
-}
-
-.cta-btn {
-  width: fit-content;
-  padding: 10px 15px;
-  border-radius: 30px;
-  color: white;
-  font-weight: bolder;
-  background-color: mediumseagreen;
-  align-self: center;
-  cursor: pointer;
-  border: none;
-  transition: all .2s;
-}
-
-.cta-btn:hover {
-  background-color: rgb(49, 141, 91);
-}
-
-.cta-btn:active {
-    color: mediumseagreen;
-    background-color: white;
-}
-
-.cta-btn:focus {
-  outline: 0;
-}
-
-nav #links {
-    display: flex;
-    flex-direction: row nowrap;
-    align-self: center;
-}
-
-.nav-link {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
-  font-size: 1.1rem;
-  margin-right: 20px;
-  color: #ccc;
-  transition: all .2s;
-  border-bottom: 1px solid;
-  border-color: rgba(256, 256, 256, 0);
-  text-decoration: none;
-}
-
-.nav-link:hover {
-  color: #ffffff;
-  border-bottom: 1px solid #fff;
-  border-color: rgba(256, 256, 256, 1);
-}
-
-.nav-link:active {
-  color: rgb(228, 92, 42);
-  border-bottom: 1px solid rgb(228, 92, 42);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .btn {
   width: fit-content;
   padding: 5px 20px 0px 20px;
@@ -122,7 +28,6 @@ nav #links {
   transition: background-color 0.2s, border-color 0.2s;
   cursor: pointer;
 }
-
 
 .btn:hover {
   background-color: rgba(256, 256, 256, 0.7);
@@ -147,7 +52,7 @@ textarea {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    resize: none; /*remove the resize handle on the bottom right*/
+    resize: none;
 }
 
 

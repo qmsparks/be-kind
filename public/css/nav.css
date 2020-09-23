@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+#form-nav, 
+#home-nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.logo {
+    color: white;
+    font-family: 'Baloo Tammudu 2', cursive;
+    font-size: 2rem;
+    align-self: center;
+}
+
+#welcome {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-weight: bold;
+    align-self: center;
+    padding-right: 40px;
+    border-bottom: 1px solid;
+    border-color: rgba(256, 256, 256, 0);
+}
+
+#welcome a {
+    color: white;
+    text-decoration: underline;
+}
+
+#welcome a:hover {
+
+}
+
+.cta {
+    align-self: center;
+}
+
+.cta-btn {
+    width: fit-content;
+    padding: 10px 15px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bolder;
+    background-color: mediumseagreen;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+}
+
+.cta-btn:hover {
+    background-color: rgb(49, 141, 91);
+}
+
+.cta-btn:active {
+    color: mediumseagreen;
+    background-color: white;
+}
+
+.cta-btn:focus {
+    outline: 0;
+}
+
+#links {
+    display: flex;
+    flex-direction: row nowrap;
+}
+
+.nav-link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    align-self: center;
+    margin-right: 20px;
+    color: #ccc;
+    transition: all .2s;
+    border-bottom: 1px solid;
+    border-color: rgba(256, 256, 256, 0);
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #ffffff;
+    border-bottom: 1px solid #fff;
+    border-color: rgba(256, 256, 256, 1);
+}
+
+.nav-link:active {
+    color: rgb(228, 92, 42);
+    border-bottom: 1px solid rgb(228, 92, 42);
+}
