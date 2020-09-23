@@ -7,7 +7,7 @@ const jobSchema = new Schema({
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'Nudge'
   // },
-  job: {type: Object, required: true}
+  cron: {type: Object, required: true}
 })
 
 const Job = mongoose.model('Job', jobSchema);
