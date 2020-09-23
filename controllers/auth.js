@@ -14,7 +14,9 @@ const INTERNAL_ERR = 'ERROR: Internal server error';
 
 
 
-
+router.get('/sign-up', (req, res) => {
+  res.render('sign-up');
+});
 
 // ANCHOR ROUTES
 // create account route
