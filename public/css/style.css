@@ -7,17 +7,15 @@
 }
 
 body {
-  background-image: url('../images/pexels-elijah-o\'donnell-3473569.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: linear-gradient(to right, #80d0c7  0%, #13547a 100%);
   background-color: rgba(0, 0, 0, .3);
-  background-size: cover;
 }
 
 .container {
   width: 40%;
   margin: 15px auto;
 }
+
 
 .btn {
   width: fit-content;

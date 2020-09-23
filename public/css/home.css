@@ -25,7 +25,7 @@
   font-style: italic;
   color: #eeeeee;
   opacity: 0;
-  border: 1px solid #646464;
+  border: 1px solid #ccc;
   transition: opacity 1s linear .2s;
 }
 
