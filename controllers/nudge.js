@@ -1,9 +1,18 @@
 const express = require('express');
+const twilio = require('twilio');
 const router = express.Router();
 
 
 const db = require('../models');
 const CronJob  = require('cron').CronJob;
+
+
+// Constants
+const TWILIO_USER = process.env.TWILIO_ACCOUNT_SID;
+const TWILIO_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const TWILIO_PHONE = process.env.TWILIO_PHONE_NUMBER;
+const client = twilio(TWILIO_USER, TWILIO_TOKEN);
+
 
 // create 
 router.post('/', async (req, res) => {
@@ -59,16 +68,23 @@ router.delete('/:id', async (req, res) => {
   } 
 })
 
+
+
+// ANCHOR helper functions
+
+
 const setCronJob = function(nudge) {
-  const cronString = (getCronValues(nudge.scheduledFor));
+  const cronString = (getDailyCronValues(nudge.scheduledFor));
   console.log(cronString);
   const id = nudge._id;
   const job = new CronJob(cronString, async function() {
     try {
-      console.log('checking if the nudge exists');
       const scheduledNudge = await db.Nudge.findById(id);
       if(scheduledNudge) {
-        console.log(scheduledNudge.taskName);
+        const user = await db.User.findById(scheduledNudge.user);
+        composeMsg(user.phone, 
+          scheduledNudge.content, 
+          TWILIO_PHONE);
       } else {
         job.stop();
       }
@@ -80,14 +96,30 @@ const setCronJob = function(nudge) {
   job.start();
 }
 
-const getCronValues = (date) => {
+const getDailyCronValues = (date) => {
   const minute = date.getMinutes();
   const hour = date.getHours();
-  const dayOfMonth = date.getDate();
-  const month = date.getMonth() + 1;
-  const dayOfWeek = date.getDay();
-  // return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
   return `${minute} ${hour} * * *`
+}
+
+
+/**
+* @function composeMsg()
+* @description composes the message to be sent using sendMsg.
+* @param {String} to phone number to send text to. 
+* @param {String} body content of message
+* @param {String} from phone number to send text from.
+*/
+const composeMsg = (to, body, from) => {
+  try {
+      client.messages.create({
+          to: to,
+          body: body,
+          from: from
+      });
+  } catch (err) {
+      console.log('ERROR: ' + err);
+  }
 }
 
 
