@@ -6,6 +6,13 @@ fetch('/nudges/api')
     populateCalendar(json.userNudges);
   })
 
+
+
+
+/**
+ * FIXME needs docstring
+ * Low priority.
+ */
 const populateCalendar = function (nudges) {
   nudges.forEach(nudge => {
     const calendarNudge = {
@@ -23,6 +30,16 @@ const populateCalendar = function (nudges) {
 }
 
 const calendarEl = document.getElementById('calendar');
+
+
+
+
+
+
+/**
+ * FIXME needs docstring
+ * Low priority.
+ */
 const calendar = new FullCalendar.Calendar(calendarEl, {
   headerToolbar: false,
   initialView: 'timeGridOneDay',
@@ -44,4 +61,6 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
     editNudge(info.event);
   }
 });
+
+
 calendar.render();

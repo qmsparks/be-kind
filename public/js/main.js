@@ -3,11 +3,13 @@ const $answer = $('#answer');
 const $cta_btn = $('.say-it');
 
 
-var typewriter = new Typewriter(app, {
+
+const typewriter = new Typewriter(app, {
     loop: false,
     delay: 75,
     cursor: ''
 });
+
 
 
 typewriter
@@ -30,6 +32,7 @@ const checkVal = () => {
         });
     }, 300);
 }
+
 
 
 setTimeout(() => {

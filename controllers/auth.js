@@ -1,32 +1,37 @@
 // ANCHOR Modules and constants
 // External Modules
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcryptjs');
 
 // Internal Modules
 const db = require('../models');
 
-// Feedback Constants
+// Instanced Modules
+const router = express.Router();
+
+// Constants
 const ACCOUNT_EXISTS_ERR = 'There is already an account with this email.';
 const EMAIL_PW_ERR = 'ERROR: Email or password does not match.';
 const INTERNAL_ERR = 'ERROR: Internal server error';
 
 
 
+
+
+// ANCHOR ROUTES
 router.get('/sign-up', (req, res) => {
   res.render('sign-up');
 });
 
-// ANCHOR ROUTES
-// create account route
+
+
+
+
 router.post('/sign-up', async (req, res) => {
   try {
     const foundUser = await db.User.exists({
       email: req.body.email
     });
-
-    console.log('Found user exists: ' + foundUser);
 
     if (foundUser) return res.send({
       message: ACCOUNT_EXISTS_ERR
@@ -36,22 +41,21 @@ router.post('/sign-up', async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, salt);
     req.body.password = hash;
 
-    console.log('password hash: ' + req.body.password);
-
     const newUser = await db.User.create(req.body);
-
-    console.log('New User: ' + newUser);
 
     if (req.session.heldMessage) {
       newUser.messages.push(req.session.heldMessage._id);
       await newUser.save();
+
+      // FIXME needs to start cron job with message[0]
       req.session.destroy();
     }
 
     res.redirect('/login')
   } catch (error) {
+    // FIXME Needs to render an actual page with error.
     res.send({
-      message: INTERNAL_ERR + ': ' + error
+      message: error
     });
   }
 });
@@ -59,7 +63,7 @@ router.post('/sign-up', async (req, res) => {
 
 
 
-// new login route
+
 router.get('/login', (req, res) => {
   res.render('login');
 });
@@ -67,7 +71,7 @@ router.get('/login', (req, res) => {
 
 
 
-// create login route
+
 router.post('/login', async (req, res) => {
   try {
     const foundUser = await db.User.findOne({
@@ -80,6 +84,7 @@ router.post('/login', async (req, res) => {
 
     const match = await bcrypt
       .compare(req.body.password, foundUser.password);
+
     if (!match) return res.send({
       message: EMAIL_PW_ERR
     });
@@ -91,6 +96,7 @@ router.post('/login', async (req, res) => {
 
     res.redirect('/profile')
   } catch (error) {
+    // FIXME Needs to render an actual page.
     res.send({
       message: INTERNAL_ERR + ': ' + error
     });
@@ -99,17 +105,22 @@ router.post('/login', async (req, res) => {
 
 
 
-// delete session route
-router.delete("/logout", async (req, res) => {
+
+
+router.delete("/logout", (req, res) => {
   try {
-    await req.session.destroy();
+    req.session.destroy();
     res.redirect('/');
-  } catch (error) {
+  } catch (err) {
+    // FIXME needs to render an actual page.
     res.send({
-      message: INTERNAL_ERR + ': ' + error
+      message: err
     });
   }
 });
+
+
+
 
 
 // ANCHOR exports
