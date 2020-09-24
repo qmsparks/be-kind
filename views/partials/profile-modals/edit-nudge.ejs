@@ -1,12 +1,15 @@
-<div id="edit-nudge">
-  <form name="edit-nudge" action="" method="POST">
-    <input type="text" name="content">
-    <input type="text" name="scheduledFor">
-    <input type="text" name="user" value="<%= user._id %>">
-    <input type="submit" value="Submit">
-  </form>
-  <form name="delete-nudge" action="" method="POST">
-    <input type="submit" value="Delete Nudge">
-  </form>
-  <i class="fas fa-window-close"></i>
+<div id="edit-nudge" class="modal">
+  <div class="nudge-form">
+    <i class="fas fa-trash-alt"></i>
+    <form name="edit-nudge" action="" method="POST">
+      <input type="text" name="content">
+      <input type="text" name="scheduledFor">
+      <input type="text" name="user" value="<%= user._id %>">
+    </form>
+    <i class="fas fa-pen-fancy"></i>
+    <form name="delete-nudge" action="" method="POST">
+      <input type="submit" value="Delete Nudge">
+    </form>
+  </div>
+  <i class="fas fa-window-close edit"></i>
 </div>

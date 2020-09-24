@@ -58,7 +58,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
   dayHeaders: false,
   dateClick: function (info) {
     $('input[name="scheduledFor"]').val(new Date(info.dateStr));
-    $('#nudge-modal').css('display', 'flex');
+    $('#new-nudge').css('display', 'flex');
   },
   eventClick: function (info) {
     editNudge(info.event);

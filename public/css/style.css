@@ -7,6 +7,7 @@
 body {
   background-image: linear-gradient(to right, #80d0c7  0%, #13547a 100%);
   background-color: rgba(0, 0, 0, .3);
+  font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -80,7 +81,7 @@ textarea {
 /* NUDGEBOARD CSS */
 
 #calendar {
-  font-family: 'Baloo Tammudu 2', cursive;
+  /* font-family: 'Roboto', sans-serif; */
   max-height: 60vh;
   margin: 0 0 20px;
 }
@@ -114,14 +115,60 @@ textarea {
   cursor: default;
 }
 
+
+
+/* Profile Modals */
+
+.modal {
+  margin: 3px 0;
+  display: none;
+  width: 100%;
+  justify-content: space-between;
+}
+
 #update-modal {
   display: none;
 }
 
-#nudge-modal {
+#update-user {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  font-family: 'Roboto', sans-serif;
+}
+
+#update-user input:focus::placeholder {
+  color: transparent;
+}
+
+#update-user input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  /* font-size: 1.1em; */
+}
+
+#update-user input[name="name"] {
+  font-size: 1.3em;
+}
+
+.modal input {
+  font-size: 0.8em;
+  padding: 0 25px 0 5px;
+  color: #555;
+  border: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.modal input:focus {
+  outline: none;
+}
+
+form[name="delete-nudge"] {
   display: none;
-  width: 100%;
-  justify-content: space-between;
 }
 
 .fa-window-close{
@@ -129,9 +176,25 @@ color: darkslateblue;
 align-self: center;
 }
 
+.fa-trash-alt {
+  color: darkslateblue;
+}
 
-#edit-nudge {
-  display: none;
+.fa-pen-fancy {
+  color: darkslateblue;
+}
+
+.fa-upload {
+  color: darkslateblue;
+}
+
+.nudge-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nudge-form input:focus::placeholder {
+  color: transparent;
 }
 
 input[name="scheduledFor"] {
@@ -142,3 +205,13 @@ input[name="user"] {
   display: none;
 }
 
+#update-modal input {
+  padding: 0 15px 0 0;
+}
+
+.update {
+  width: 80%;
+  border-radius: 25px;
+  padding: 5px;
+  border: none;
+}
