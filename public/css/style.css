@@ -14,7 +14,6 @@ body {
   margin: 15px auto;
 }
 
-
 .btn {
   width: fit-content;
   padding: 5px 20px 0px 20px;
@@ -55,7 +54,6 @@ textarea {
     box-shadow: none;
     resize: none;
 }
-
 
 .page-heading {
     color: white;
