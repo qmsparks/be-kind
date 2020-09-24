@@ -1,6 +1,5 @@
 const express = require('express');
 const twilio = require('twilio');
-const parser = require('cron-parser');
 const router = express.Router();
 
 
@@ -75,13 +74,11 @@ router.delete('/:id', async (req, res) => {
 
 
 const setCronJob = function(nudge) {
-  const cronString = (getCronValues(nudge.scheduledFor));
+  const cronString = (getDailyCronValues(nudge.scheduledFor));
   console.log(cronString);
   const id = nudge._id;
   const job = new CronJob(cronString, async function() {
     try {
-     
-      console.log('checking if the nudge exists');
       const scheduledNudge = await db.Nudge.findById(id);
       if(scheduledNudge) {
         const user = await db.User.findById(scheduledNudge.user);
@@ -99,13 +96,9 @@ const setCronJob = function(nudge) {
   job.start();
 }
 
-const getCronValues = (date) => {
+const getDailyCronValues = (date) => {
   const minute = date.getMinutes();
   const hour = date.getHours();
-  const dayOfMonth = date.getDate();
-  const month = date.getMonth() + 1;
-  const dayOfWeek = date.getDay();
-  // return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
   return `${minute} ${hour} * * *`
 }
 
@@ -124,15 +117,10 @@ const composeMsg = (to, body, from) => {
           body: body,
           from: from
       });
-      console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
   } catch (err) {
       console.log('ERROR: ' + err);
   }
 }
-
-
-
-
 
 
 module.exports = router;
