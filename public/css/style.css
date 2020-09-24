@@ -81,19 +81,24 @@ textarea {
 
 #calendar {
   font-family: 'Baloo Tammudu 2', cursive;
-  max-height: 650px;
+  max-height: 60vh;
+  margin: 0 0 20px;
 }
 
 /* Event slots */
 .fc .fc-timegrid-col.fc-day-today {
-  /* background-color: rgba(255, 255, 255, .2); */
   background-color: rgba(219, 158, 215, .2);
 }
 
-/* Events */
-.fc-event
-{
-  width: 102%;
+.fc-timegrid-slot:hover {
+  cursor: cell;
+}
+
+.fc-timegrid-event-harness:hover {
+  cursor: cell;
+}
+
+.fc-event-title {
   text-align: right;
 }
 
@@ -102,8 +107,11 @@ textarea {
 }
 
 .fc-timegrid-slot-label {
-  /* color: #8C658A */
   color: darkslateblue;
+}
+
+.fc-timegrid-slot-label:hover {
+  cursor: default;
 }
 
 #update-modal {
@@ -112,7 +120,15 @@ textarea {
 
 #nudge-modal {
   display: none;
+  width: 100%;
+  justify-content: space-between;
 }
+
+.fa-window-close{
+color: darkslateblue;
+align-self: center;
+}
+
 
 #edit-nudge {
   display: none;

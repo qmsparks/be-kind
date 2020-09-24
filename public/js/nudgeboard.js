@@ -18,8 +18,6 @@ const populateCalendar = function (nudges) {
     const calendarNudge = {
       title: nudge.taskName,
       id: nudge._id,
-      // NOTE some oddness with populating the description in the edit modal, I suspect it starts here
-      description: nudge.taskDescription,
       rrule: {
         freq: 'daily',
         dtstart: nudge.scheduledFor
@@ -49,10 +47,10 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
       dayCount: 1,
       slotDuration: '00:15:00',
       slotMinTime: '07:00:00',
-      slotMaxTime: '21:00:00'
+      slotMaxTime: '21:15:00'
     }
   },
-  eventColor: 'rgba(60, 179, 113, .7)',
+  eventColor: 'rgba(60, 179, 113, 0)',
   aspectRatio: 0.5,
   displayEventTime: false,
   defaultTimedEventDuration: '00:15:00',
@@ -60,7 +58,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
   dayHeaders: false,
   dateClick: function (info) {
     $('input[name="scheduledFor"]').val(new Date(info.dateStr));
-    $('#nudge-modal').css('display', 'block');
+    $('#nudge-modal').css('display', 'flex');
   },
   eventClick: function (info) {
     editNudge(info.event);

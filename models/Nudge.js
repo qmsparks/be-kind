@@ -12,7 +12,6 @@ const nudgeSchema = new Schema({
     type: String,
     required: true
   },
-  taskDescription: String,
   sent: {
     type: Boolean,
     default: false
