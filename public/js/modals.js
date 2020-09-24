@@ -9,7 +9,7 @@ $('.fa-window-close').on('click', () =>{
 const editNudge = function (nudge) {
   $('#edit-nudge').css('display', 'block');
   $('form[name="edit-nudge"]').attr('action', `/nudges/${nudge.id}?_method=PUT`);
-  $('form[name="edit-nudge"] input[name="taskName"]').val(nudge.title);
+  $('form[name="edit-nudge"] input[name="content"]').val(nudge.title);
 
   if (nudge.description) {
     $('form[name="edit-nudge"] input[name="taskDescription"]').val(nudge.description);

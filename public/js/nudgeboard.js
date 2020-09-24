@@ -16,7 +16,7 @@ fetch('/nudges/api')
 const populateCalendar = function (nudges) {
   nudges.forEach(nudge => {
     const calendarNudge = {
-      title: nudge.taskName,
+      title: nudge.content,
       id: nudge._id,
       rrule: {
         freq: 'daily',
