@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+
 const messageSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,6 +23,8 @@ const messageSchema = new Schema({
 }, {
   timestamps: true
 });
+
+
 
 const Message = mongoose.model('Message', messageSchema);
 
