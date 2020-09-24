@@ -9,7 +9,6 @@ const CronJob  = require('cron').CronJob;
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
-
     setCronJob(createdNudge);
 
     const currentUser = await db.User.findById(req.session.currentUser.id);
@@ -49,23 +48,25 @@ router.put('/:id', async (req, res) => {
 // ANCHOR  delete
 router.delete('/:id', async (req, res) => {
   try {
+    const user = await db.User.findById(req.session.currentUser.id);
+    await user.nudges.pull(req.params.id);
+    user.save();
     await db.Nudge.findByIdAndDelete(req.params.id);
-    // TODO go back and wipe these from the user's array when they're deleted
+    
     res.redirect('/profile');
   } catch (err) {
     res.send(err);
   } 
 })
 
-
-
-
-const setCronJob = (nudge) => {
-  const cronString = getCronValues(nudge.scheduledFor);
-  // const cronString = '* * * * * *'
+const setCronJob = function(nudge) {
+  const cronString = (getCronValues(nudge.scheduledFor));
+  console.log(cronString);
+  const id = nudge._id;
   const job = new CronJob(cronString, async function() {
     try {
-      const scheduledNudge = await db.Nudge.findByIdAndUpdate(nudge._id);
+      console.log('checking if the nudge exists');
+      const scheduledNudge = await db.Nudge.findById(id);
       if(scheduledNudge) {
         console.log(scheduledNudge.taskName);
       } else {
@@ -75,9 +76,9 @@ const setCronJob = (nudge) => {
       return console.log(error);
     }
   })
+  console.log('starting job');
   job.start();
 }
-
 
 const getCronValues = (date) => {
   const minute = date.getMinutes();
@@ -85,7 +86,8 @@ const getCronValues = (date) => {
   const dayOfMonth = date.getDate();
   const month = date.getMonth() + 1;
   const dayOfWeek = date.getDay();
-  return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
+  // return `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`
+  return `${minute} ${hour} * * *`
 }
 
 

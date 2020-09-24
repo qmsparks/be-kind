@@ -12,7 +12,6 @@ const nudgeSchema = new Schema({
     type: String,
     required: true
   },
-  taskDescription: String,
   sent: {
     type: Boolean,
     default: false
@@ -28,9 +27,6 @@ const nudgeSchema = new Schema({
 }, {
   timestamps: true
 });
-
-
-
 
 const Nudge = mongoose.model('Nudge', nudgeSchema);
 

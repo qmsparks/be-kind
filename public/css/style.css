@@ -62,16 +62,56 @@ textarea {
     margin-top: 3%;
 }
 
+.fa-user-edit {
+  margin: 0 5px 10px;
+  padding: 20px 0 0 ;
+}
+
+.fa-user-edit:hover {
+  cursor: pointer;
+}
+
+.heading-container{
+  display: flex;
+  justify-content: center;
+}
 
 
 /* NUDGEBOARD CSS */
-#nudgeboard-wrapper{
-  width: 500px;
-  overflow: hidden;
+
+#calendar {
+  font-family: 'Baloo Tammudu 2', cursive;
+  max-height: 60vh;
+  margin: 0 0 20px;
 }
 
-ul {
-  list-style-type: none;
+/* Event slots */
+.fc .fc-timegrid-col.fc-day-today {
+  background-color: rgba(219, 158, 215, .2);
+}
+
+.fc-timegrid-slot:hover {
+  cursor: cell;
+}
+
+.fc-timegrid-event-harness:hover {
+  cursor: cell;
+}
+
+.fc-event-title {
+  text-align: right;
+}
+
+.fc-event:hover {
+  cursor: pointer;
+}
+
+.fc-timegrid-slot-label {
+  color: darkslateblue;
+}
+
+.fc-timegrid-slot-label:hover {
+  cursor: default;
 }
 
 #update-modal {
@@ -80,7 +120,15 @@ ul {
 
 #nudge-modal {
   display: none;
+  width: 100%;
+  justify-content: space-between;
 }
+
+.fa-window-close{
+color: darkslateblue;
+align-self: center;
+}
+
 
 #edit-nudge {
   display: none;

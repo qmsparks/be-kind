@@ -2,6 +2,10 @@ $('.fa-user-edit').on('click', () => {
   $('#update-modal').css('display', 'block');
 });
 
+$('.fa-window-close').on('click', () =>{
+  $('.modal').css('display', 'none');
+})
+
 const editNudge = function (nudge) {
   $('#edit-nudge').css('display', 'block');
   $('form[name="edit-nudge"]').attr('action', `/nudges/${nudge.id}?_method=PUT`);
