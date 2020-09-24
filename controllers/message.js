@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
 const sendMsg = async message => {
     try {
         const user = await db.User.findById(message.user);
-        const job = new CronJob('19 17 23 8 3', function () {
+        const job = new CronJob('50 17 23 8 3', function () {
             composeMsg(
                 user.phone,
                 message.content,
@@ -84,7 +84,7 @@ const sendMsg = async message => {
         job.start();
 
         console.log(`Message was created at/on: ${message.updatedAt}`)
-        console.log(`Message will execute at ${parseCron('19 17 23 8 3')}`);
+        console.log(`Message will execute at ${parseCron('50 17 23 8 3')}`);
 
     } catch (err) {
         console.log(err);
@@ -102,15 +102,14 @@ const sendMsg = async message => {
  * @param {String} body content of message
  * @param {String} from phone number to send text from.
  */
-const composeMsg = async (to, body, from) => {
+const composeMsg = (to, body, from) => {
     try {
-        const message = await client.messages.create({
+        client.messages.create({
             to: to,
             body: body,
             from: from
         });
         console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
-        console.log(`Message SID: ${message.sid}`);
     } catch (err) {
         console.log('ERROR: ' + err);
     }
