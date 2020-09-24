@@ -6,6 +6,13 @@ fetch('/nudges/api')
     populateCalendar(json.userNudges);
   })
 
+
+
+
+/**
+ * FIXME needs docstring
+ * Low priority.
+ */
 const populateCalendar = function (nudges) {
   nudges.forEach(nudge => {
     const calendarNudge = {
@@ -23,6 +30,16 @@ const populateCalendar = function (nudges) {
 }
 
 const calendarEl = document.getElementById('calendar');
+
+
+
+
+
+
+/**
+ * FIXME needs docstring
+ * Low priority.
+ */
 const calendar = new FullCalendar.Calendar(calendarEl, {
   headerToolbar: false,
   initialView: 'timeGridOneDay',
@@ -35,7 +52,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
       slotMaxTime: '21:00:00'
     }
   },
-  eventColor: 'mediumseagreen',
+  eventColor: 'rgba(60, 179, 113, .7)',
   aspectRatio: 0.5,
   displayEventTime: false,
   defaultTimedEventDuration: '00:15:00',
@@ -49,4 +66,6 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
     editNudge(info.event);
   }
 });
+
+
 calendar.render();

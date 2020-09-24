@@ -2,6 +2,7 @@
 // External Modules
 const express = require('express');
 const twilio = require('twilio');
+const parser = require('cron-parser');
 const { CronJob } = require('cron');
 
 // Internal Modules
@@ -10,36 +11,32 @@ const db = require('../models');
 // Instanced Modules 
 const router = express.Router();
 
-const user = process.env.TWILIO_ACCOUNT_SID;
-const token = process.env.TWILIO_AUTH_TOKEN;
-const clientPhone = process.env.TWILIO_PHONE_NUMBER;
-const client = twilio(user, token);
+// Constants
+const TWILIO_USER = process.env.TWILIO_ACCOUNT_SID;
+const TWILIO_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const TWILIO_PHONE = process.env.TWILIO_PHONE_NUMBER;
+const client = twilio(TWILIO_USER, TWILIO_TOKEN);
+
+
 
 
 
 // ANCHOR Routes
 // create and push message to user messages
 router.post('/', async (req, res) => {
-    const user = req.session.currentUser;
+    const loggedIn = req.session.currentUser === undefined ? false : true;
+    req.body.user = loggedIn ? req.session.currentUser.id : undefined;
 
-    if (!user) {
-        const message = await db.Message.create(req.body);
-        const createDate = await getCronValues(message.updatedAt);
-        const cronString = await getRandomTimeOfWeek(createDate);
-        req.body.cronString = cronString;
+    const message = await db.Message.create(req.body);
+    const createDate = getCronValues(message.updatedAt);
+    const cronString = getRandomTimeOfWeek(createDate);
+    message.cronString = cronString;
+
+    if (!loggedIn) {
         req.session.heldMessage = message;
-
-        res.render('sign-up', {
-            myMessage: req.session.heldMessage
-        });
+        res.render('sign-up');
     } else {
         try {
-            req.body.user = await user.id;
-            const message = await db.Message.create(req.body);
-            const createDate = await getCronValues(message.updatedAt);
-            const cronString = await getRandomTimeOfWeek(createDate);
-            req.body.cronString = cronString;
-
             db.User.findByIdAndUpdate(
                 message.user,
                 {
@@ -48,21 +45,13 @@ router.post('/', async (req, res) => {
                     },
                 }, (err, updatedItem) => {
                     if (err) return res.send(err);
-                    console.log(updatedItem);
+
                     res.render('profile', {
                         user: updatedItem
                     });
                 });
 
-            const job = new CronJob(('45 14 22 9 2'), function () {
-                composeMsg(
-                    '+12816827144',
-                    message.content,
-                    clientPhone
-                )
-            });
-
-            job.start();
+            sendMsg(message);
 
         } catch (error) {
             console.log(error + ': Internal server error!');
@@ -75,15 +64,52 @@ router.post('/', async (req, res) => {
 
 
 // ANCHOR Helper Functions
-const composeMsg = async (to, body, from) => {
+/**
+ * @function sendMsg();
+ * @description sends message using composeMsg as a helper.
+ * @param {Message Object} message 
+ * TODO MORE TESTING
+ */
+const sendMsg = async message => {
     try {
-        const message = await client.messages.create({
+        const user = await db.User.findById(message.user);
+        const job = new CronJob('50 17 23 8 3', function () {
+            composeMsg(
+                user.phone,
+                message.content,
+                TWILIO_PHONE
+            );
+        });
+
+        job.start();
+
+        console.log(`Message was created at/on: ${message.updatedAt}`)
+        console.log(`Message will execute at ${parseCron('50 17 23 8 3')}`);
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+
+
+
+/**
+ * @function composeMsg()
+ * @description composes the message to be sent using sendMsg.
+ * @param {String} to phone number to send text to. 
+ * @param {String} body content of message
+ * @param {String} from phone number to send text from.
+ */
+const composeMsg = (to, body, from) => {
+    try {
+        client.messages.create({
             to: to,
             body: body,
             from: from
         });
         console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
-        console.log(`Message SID: ${message.sid}`);
     } catch (err) {
         console.log('ERROR: ' + err);
     }
@@ -93,23 +119,42 @@ const composeMsg = async (to, body, from) => {
 
 
 
-const sendMessage = (cronValues, content) => {
-    console.log(content);
+/**
+ * @function parseCron()
+ * @description parses a cron expression into a date string.
+ * @param {String} expression cron expression to be parsed.
+ */
+const parseCron = expression => {
+    let dateItems = expression.split(' ')
+        .map(item => parseInt(item));
+    dateItems[3] += 1;
+
+    dateItems = dateItems.join(' ');
+
+    try {
+        const interval = parser.parseExpression(dateItems);
+        return `Date: ${interval.next().toString()}`;
+    } catch (err) {
+        console.log(err);
+    }
 }
+
+
 
 
 
 /**
  * @function randomNumInRange()
  * @description returns a random number within a specified range.
- * @param {Integer} min minimum number in range 
- * @param {Integer} max maximum number in range 
+ * @param {Number} min minimum number in range 
+ * @param {Number} max maximum number in range 
  */
 const randomNumInRange = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
 }
+
 
 
 
@@ -130,6 +175,8 @@ const getCronValues = (date) => {
 
 
 
+
+
 /**
  * @function getRandomTimeOfDay()
  * @description generates a cron string that will run every day at a random hour
@@ -143,11 +190,12 @@ const getRandomTimeOfDay = () => {
 
 
 
+
 /**
  * @function getRandomTimeOfWeek()
  * @description returns a cron string that represents a random time between when a message was created
  * and seven days after the message was created.
- * @param {*} cronValues 
+ * @param {String} cronValues 
  */
 const getRandomTimeOfWeek = (cronValues) => {
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -176,6 +224,8 @@ const getRandomTimeOfWeek = (cronValues) => {
 
     return valNums.join(' ');
 }
+
+
 
 
 

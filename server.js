@@ -1,22 +1,23 @@
-// EXTERNAL MODULES
+// ANCHOR modules and configuration
+// external modules
 const express = require('express');
 const path = require('path');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-// INTERNAL MODULES
+// internal modules
 const controllers = require('./controllers');
 
-// INSTANCED MODULES
+// Instanced modules
 const app = express();
 
-// CONFIGURATION
+// configuration
 const PORT = 3000;
 app.set('view engine', 'ejs');
 
 
-// MIDDLEWARE
+// ANCHOR Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
@@ -37,7 +38,7 @@ app.use(session({
 }));
 
 
-// ROUTES
+// ANCHOR routes
 app.get('/about', (req, res) => {
   res.render('about', {
     user: req.session.currentUser
@@ -60,8 +61,10 @@ app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
-app.use('/send', controllers.send);
 
+
+
+// ANCHOR start server
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);
 });
