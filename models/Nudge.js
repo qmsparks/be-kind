@@ -8,7 +8,7 @@ const nudgeSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  taskName: {
+  content: {
     type: String,
     required: true
   },
