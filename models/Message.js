@@ -14,10 +14,6 @@ const messageSchema = new Schema({
     type: String,
     default: '',
   },
-  receiveDaily: {
-    type: Boolean,
-    default: false
-  },
   sent: {
     type: Boolean,
     default: false
