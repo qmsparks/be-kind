@@ -37,7 +37,8 @@ router.post('/', async (req, res) => {
         res.render('sign-up');
     } else {
         try {
-            db.User.findByIdAndUpdate(
+            const user = await db.User.findById(message.user);
+            await db.User.findByIdAndUpdate(
                 message.user,
                 {
                     $push: {
@@ -73,7 +74,7 @@ router.post('/', async (req, res) => {
 const sendMsg = async message => {
     try {
         const user = await db.User.findById(message.user);
-        new CronJob('1 14 24 8 3', function () {
+        new CronJob('10 14 24 8 3', function () {
             composeMsg(
                 user.phone,
                 message.content,
@@ -107,6 +108,7 @@ const composeMsg = (to, body, from) => {
             body: body,
             from: from
         });
+
         console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
     } catch (err) {
         console.log('ERROR: ' + err);
