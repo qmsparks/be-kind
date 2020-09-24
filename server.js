@@ -4,8 +4,6 @@ const path = require('path');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const CronJob = require('cron').CronJob;
-// const db = require('./models');
 
 // INTERNAL MODULES
 const controllers = require('./controllers');
@@ -62,7 +60,7 @@ app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
-// app.use('/send', controllers.send);
+app.use('/send', controllers.send);
 
 app.listen(PORT, () => {
   console.log(`Now listening for requests on port ${PORT}`);

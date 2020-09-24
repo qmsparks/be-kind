@@ -30,14 +30,19 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
     timeGridOneDay: {
       type: 'timeGrid',
       dayCount: 1,
-      slotDuration: '00:15:00'
+      slotDuration: '00:15:00',
+      slotMinTime: '07:00:00',
+      slotMaxTime: '21:00:00'
     }
   },
+  eventColor: 'mediumseagreen',
+  aspectRatio: 0.5,
+  displayEventTime: false,
   defaultTimedEventDuration: '00:15:00',
   allDaySlot: false,
   dayHeaders: false,
   dateClick: function (info) {
-    $('input[name="scheduledFor"]').val(info.dateStr);
+    $('input[name="scheduledFor"]').val(new Date(info.dateStr));
     $('#nudge-modal').css('display', 'block');
   },
   eventClick: function (info) {

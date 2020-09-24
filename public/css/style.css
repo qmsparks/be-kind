@@ -68,16 +68,42 @@ textarea {
     margin-top: 3%;
 }
 
+.fa-user-edit {
+  margin: 0 5px 10px;
+  padding: 20px 0 0 ;
+}
+
+.fa-user-edit:hover {
+  cursor: pointer;
+}
+
+.heading-container{
+  display: flex;
+  justify-content: center;
+}
 
 
 /* NUDGEBOARD CSS */
-#nudgeboard-wrapper{
-  width: 500px;
-  overflow: hidden;
+
+#calendar {
+  font-family: 'Baloo Tammudu 2', cursive;
+  max-height: 700px;
 }
 
-ul {
-  list-style-type: none;
+/* Event slots */
+.fc .fc-timegrid-col.fc-day-today {
+  background-color: rgba(0, 0, 0, .3);
+}
+
+/* Events */
+.fc-event
+{
+  width: 102%;
+  text-align: right;
+}
+
+.fc-event:hover {
+  cursor: pointer;
 }
 
 #update-modal {

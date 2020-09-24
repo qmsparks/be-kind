@@ -13,8 +13,10 @@
 <body>
   <%- include('./partials/nav') %>
   <div class="container">
-    <i class="fas fa-user-edit"></i>
-    <h1> <%= user.name %>'s Kind Board</h1>
+    <div class="heading-container">
+      <i class="fas fa-user-edit"></i>
+      <h1> <%= user.name %>'s Kind Board</h1>
+    </div>
     <div class="modals">
       <%- include('./partials/profile-modals/edit-profile')  %>
       <%- include('./partials/messages') %>

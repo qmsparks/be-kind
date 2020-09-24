@@ -10,10 +10,10 @@ const db = require('../models');
 // Instanced Modules 
 const router = express.Router();
 
-// const user = process.env.TWILIO_ACCOUNT_SID;
-// const token = process.env.TWILIO_AUTH_TOKEN;
-// const clientPhone = process.env.TWILIO_PHONE_NUMBER;
-// const client = twilio(user, token);
+const user = process.env.TWILIO_ACCOUNT_SID;
+const token = process.env.TWILIO_AUTH_TOKEN;
+const clientPhone = process.env.TWILIO_PHONE_NUMBER;
+const client = twilio(user, token);
 
 
 
@@ -176,39 +176,6 @@ const getRandomTimeOfWeek = (cronValues) => {
 
     return valNums.join(' ');
 }
-
-
-
-// const schedule = async (user, message = true) => {
-//     let currentTransmission;
-
-//     try {
-//         if (message) {
-//             for (let i = 0; i < user.messages.length; i++) {
-//                 currentTransmission = await db.Message.findById(user.messages[i]);
-//                 if (!currentTransmission.sent) {
-//                     break;
-//                 }
-//             }
-//         } else {
-//             for (let i = 0; i < user.nudges.length; i++) {
-//                 currentTransmission = await db.Nudge.findById(user.nudges[i]);
-//                 if (!currentTransmission.sent) {
-//                     break;
-//                 }
-//             }
-//         }
-
-//         const job = new CronJob('* * * * * *', () => {
-//             console.log('A message has been logged');
-//             // sendMessage(currentTransmission.content);
-//         });
-//         job.start();
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
 
 
 
