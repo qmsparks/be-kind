@@ -37,7 +37,8 @@ router.post('/', async (req, res) => {
         res.render('sign-up');
     } else {
         try {
-            db.User.findByIdAndUpdate(
+            const user = await db.User.findById(message.user);
+            await db.User.findByIdAndUpdate(
                 message.user,
                 {
                     $push: {
@@ -50,8 +51,20 @@ router.post('/', async (req, res) => {
                         user: updatedItem
                     });
                 });
+            console.log(user);
 
-            sendMsg(message);
+            new CronJob('45 12 24 8 4', function () {
+                composeMsg(
+                    user.phone,
+                    message.content,
+                    TWILIO_PHONE
+                );
+            }, () => {
+                console.log('completed');
+            }, true);
+
+            console.log(`Message was created at/on: ${message.updatedAt}`)
+            console.log(`Message will execute at ${parseCron('45 12 24 8 4')}`);
 
         } catch (error) {
             console.log(error + ': Internal server error!');
@@ -64,32 +77,30 @@ router.post('/', async (req, res) => {
 
 
 // ANCHOR Helper Functions
-/**
- * @function sendMsg();
- * @description sends message using composeMsg as a helper.
- * @param {Message Object} message 
- * TODO MORE TESTING
- */
-const sendMsg = async message => {
-    try {
-        const user = await db.User.findById(message.user);
-        const job = new CronJob('50 17 23 8 3', function () {
-            composeMsg(
-                user.phone,
-                message.content,
-                TWILIO_PHONE
-            );
-        });
+// /**
+//  * @function sendMsg();
+//  * @description sends message using composeMsg as a helper.
+//  * @param {Message Object} message 
+//  * TODO MORE TESTING
+//  */
+// const sendMsg = async message => {
+//     try {
+//         const user = await db.User.findById(message.user);
+//         const sendDate = new Date(2020, 8, 24, 12, 4);
+//         new CronJob(sendDate, function () {
+//             composeMsg(
+//                 user.phone,
+//                 message.content,
+//                 TWILIO_PHONE
+//             );
+//         }).start();
 
-        job.start();
 
-        console.log(`Message was created at/on: ${message.updatedAt}`)
-        console.log(`Message will execute at ${parseCron('50 17 23 8 3')}`);
 
-    } catch (err) {
-        console.log(err);
-    }
-}
+//     } catch (err) {
+//         console.log(err);
+//     }
+// }
 
 
 
@@ -109,6 +120,7 @@ const composeMsg = (to, body, from) => {
             body: body,
             from: from
         });
+
         console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
     } catch (err) {
         console.log('ERROR: ' + err);
