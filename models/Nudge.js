@@ -28,6 +28,9 @@ const nudgeSchema = new Schema({
   timestamps: true
 });
 
+
+
+
 const Nudge = mongoose.model('Nudge', nudgeSchema);
 
 module.exports = Nudge;

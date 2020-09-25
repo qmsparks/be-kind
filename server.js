@@ -18,6 +18,9 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
 
 
+
+
+
 // ANCHOR Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,6 +40,9 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 * 7 * 2
   }
 }));
+
+
+
 
 
 // ANCHOR routes
@@ -62,6 +68,8 @@ app.use('/', controllers.auth);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
+
+
 
 
 

@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
             sendMsg(message);
 
         } catch (error) {
-            console.log(error + ': Internal server error!');
+            console.log(error);
         }
     }
 });
@@ -109,7 +109,7 @@ const composeMsg = (to, body, from) => {
 
         console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
     } catch (err) {
-        console.log('ERROR: ' + err);
+        console.log(err);
     }
 }
 
