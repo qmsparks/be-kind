@@ -10,8 +10,9 @@ fetch('/nudges/api')
 
 
 /**
- * FIXME needs docstring
- * Low priority.
+ * @function populateCalendar()
+ * @description reformats nudge information from database to be read and displayed by fullcalendar
+ * @param {Array} nudges nudge data attached to this user 
  */
 const populateCalendar = function (nudges) {
   nudges.forEach(nudge => {
@@ -27,16 +28,35 @@ const populateCalendar = function (nudges) {
   })
 }
 
-const calendarEl = document.getElementById('calendar');
-
-
-
 
 
 
 /**
- * FIXME needs docstring
- * Low priority.
+ * @function editNudge()
+ * @description populates edit form based on clicked calendar event
+ * @param {Object} nudge information from database for selected nudge
+ */
+const editNudge = function (nudge) {
+  $('#edit-nudge').css('display', 'flex');
+  $('form[name="edit-nudge"]').attr('action', `/nudges/${nudge.id}?_method=PUT`);
+  $('form[name="edit-nudge"] input[name="content"]').val(nudge.title);
+
+  if (nudge.description) {
+    $('form[name="edit-nudge"] input[name="taskDescription"]').val(nudge.description);
+  }
+
+  $('form[name="edit-nudge"] input[name="scheduledFor"]').val(nudge.start);
+
+  $('form[name="delete-nudge"').attr('action', `/nudges/${nudge.id}?_method=DELETE`);
+}
+
+
+
+
+const calendarEl = document.getElementById('calendar');
+
+/**
+ * Instantiates calendar using fullcalendar.io with custom appearance and behavior
  */
 const calendar = new FullCalendar.Calendar(calendarEl, {
   headerToolbar: false,
@@ -50,7 +70,7 @@ const calendar = new FullCalendar.Calendar(calendarEl, {
       slotMaxTime: '21:15:00'
     }
   },
-  eventColor: 'rgba(60, 179, 113, 0)',
+  eventColor: 'rgba(0, 0, 0, 0)',
   aspectRatio: 0.5,
   displayEventTime: false,
   defaultTimedEventDuration: '00:15:00',

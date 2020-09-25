@@ -20,18 +20,3 @@ $('.fa-pen-fancy').on('click', () => {
 $('.fa-upload').on('click', () => {
   $('form[name="add-nudge"]').submit();
 })
-
-
-const editNudge = function (nudge) {
-  $('#edit-nudge').css('display', 'flex');
-  $('form[name="edit-nudge"]').attr('action', `/nudges/${nudge.id}?_method=PUT`);
-  $('form[name="edit-nudge"] input[name="content"]').val(nudge.title);
-
-  if (nudge.description) {
-    $('form[name="edit-nudge"] input[name="taskDescription"]').val(nudge.description);
-  }
-
-  $('form[name="edit-nudge"] input[name="scheduledFor"]').val(nudge.start);
-
-  $('form[name="delete-nudge"').attr('action', `/nudges/${nudge.id}?_method=DELETE`);
-}
