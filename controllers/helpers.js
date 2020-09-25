@@ -196,8 +196,9 @@ const getRandomTimeOfDay = () => {
  * @function getRandomTimeOfWeek()
  * @description returns a cron string that represents 
  * a random time between when a message was created
- * and seven days after the message was created.
+ * and up to seven days after the message was created.
  * @param {String} cronValues 
+ * @param {Number} daysAway
  */
 const getRandomTimeOfWeek = (cronValues, daysAway) => {
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
