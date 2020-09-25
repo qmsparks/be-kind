@@ -1,9 +1,19 @@
+// ANCHOR Modules and Constants
+// External Modules
 const express = require('express');
-const router = express.Router();
 
+// Internal Modules
 const db = require('../models');
 
-// show profile route
+// Instanced Modules
+const router = express.Router();
+
+
+
+
+
+// ANCHOR Profile Routes
+// Show Route
 router.get('/', async (req, res) => {
   try {
     const oneUser = await db.User.findById(req.session.currentUser.id);
@@ -16,34 +26,51 @@ router.get('/', async (req, res) => {
       message: 'Error: ' + error
     });
   }
-})
+});
 
 
-// ANCHOR update route
+
+
+
+// Update Route
 router.put('/', async (req, res) => {
   try {
-    await db.User.findByIdAndUpdate(req.session.currentUser.id, req.body, { new: true });
+    await db.User.findByIdAndUpdate(
+      req.session.currentUser.id,
+      req.body,
+      { new: true }
+    );
     res.redirect('/profile');
+
   } catch (error) {
     res.send({
       message: 'Error: ' + error
     });
   }
-})
+});
 
-// ANCHOR delete route
+
+
+
+
+// Delete Route
 router.delete('/', async (req, res) => {
   try {
     const deletedUser = await db.User.findByIdAndDelete(req.session.currentUser.id);
     await db.Message.deleteMany({ user: deletedUser._id });
     await db.Nudge.deleteMany({ user: deletedUser._id });
-    await req.session.destroy();
+    req.session.destroy();
     res.redirect('/');
   } catch (error) {
-    message: 'Error: ' + error
+    console.log(error);
+    res.render('profile');
   }
-})
+});
 
 
+
+
+
+// ANCHOR Exported Modules
 module.exports = router;
 
