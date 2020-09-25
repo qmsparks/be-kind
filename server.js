@@ -13,7 +13,8 @@ const controllers = require('./controllers');
 const app = express();
 
 // configuration
-const PORT = 3000;
+require("dotenv").config()
+const PORT = process.env.MONGODB_URI || 3000;
 app.set('view engine', 'ejs');
 
 
@@ -28,9 +29,9 @@ app.use((req, res, next) => {
 app.use(session({
   resave: false,
   saveUninitialized: false,
-  secret: "hawksblood",
+  secret: process.env.SECRET,
   store: new MongoStore({
-    url: "mongodb://localhost:27017/be-kind-sessions",
+    url: process.env.MONGODB_URI || "mongodb://localhost:27017/be-kind-sessions",
   }),
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 * 2
