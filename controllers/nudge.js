@@ -1,13 +1,20 @@
+// ANCHOR Modules and constants
+// External Modules
 const express = require('express');
+
+// Internal Modules
 const helper = require('./helpers');
+const db = require('../models');
+
+// Instanced Modules
 const router = express.Router();
 
 
-const db = require('../models');
 
 
 
-// create 
+// ANCHOR Nudge Routes
+// Nudge Create Route
 router.post('/', async (req, res) => {
   try {
     const createdNudge = await db.Nudge.create(req.body);
@@ -25,7 +32,10 @@ router.post('/', async (req, res) => {
 });
 
 
-// hand nudge information to javascript
+
+
+
+// hands nudge information to javascript
 router.get('/api', (req, res) => {
   db.User.findById(req.session.currentUser.id)
     .populate('nudges')
@@ -37,7 +47,11 @@ router.get('/api', (req, res) => {
     });
 });
 
-// ANCHOR update
+
+
+
+
+// Update Route
 router.put('/:id', async (req, res) => {
   try {
     const updatedNudge = await db.Nudge.findByIdAndUpdate(
@@ -54,7 +68,11 @@ router.put('/:id', async (req, res) => {
   }
 })
 
-// ANCHOR  delete
+
+
+
+
+// Delete Route
 router.delete('/:id', async (req, res) => {
   try {
     const user = await db.User.findById(req.session.currentUser.id);
@@ -69,4 +87,8 @@ router.delete('/:id', async (req, res) => {
 });
 
 
+
+
+
+// ANCHOR Exported Modules
 module.exports = router;
