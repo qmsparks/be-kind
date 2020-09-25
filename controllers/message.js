@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
     const message = await db.Message.create(req.body);
     const createDate = getCronValues(message.updatedAt);
-    const cronString = getRandomTimeOfWeek(createDate);
+    const cronString = getRandomTimeOfWeek(createDate, 1);
     message.cronString = cronString;
 
     if (!loggedIn) {
@@ -37,7 +37,6 @@ router.post('/', async (req, res) => {
         res.render('sign-up');
     } else {
         try {
-            const user = await db.User.findById(message.user);
             await db.User.findByIdAndUpdate(
                 message.user,
                 {
@@ -68,13 +67,12 @@ router.post('/', async (req, res) => {
 /**
  * @function sendMsg();
  * @description sends message using composeMsg as a helper.
- * @param {Message Object} message 
- * TODO MORE TESTING
+ * @param {Message Object} message message object to be sent.
  */
 const sendMsg = async message => {
     try {
         const user = await db.User.findById(message.user);
-        new CronJob('10 14 24 8 3', function () {
+        new CronJob(message.cronString, function () {
             composeMsg(
                 user.phone,
                 message.content,
@@ -82,8 +80,8 @@ const sendMsg = async message => {
             );
         }).start();
 
-        console.log(`Message was created at/on: ${message.updatedAt}`)
-        console.log(`Message will execute at ${parseCron('55 13 24 8 3')}`);
+        console.log(`Message was created on: ${message.updatedAt}`)
+        console.log(`Message will execute at ${parseCron(message.cronString)}`);
 
     } catch (err) {
         console.log(err);
@@ -127,7 +125,7 @@ const composeMsg = (to, body, from) => {
 const parseCron = expression => {
     let dateItems = expression.split(' ')
         .map(item => parseInt(item));
-    dateItems[3] += 1;
+    dateItems[3];
 
     dateItems = dateItems.join(' ');
 
@@ -197,14 +195,13 @@ const getRandomTimeOfDay = () => {
  * and seven days after the message was created.
  * @param {String} cronValues 
  */
-const getRandomTimeOfWeek = (cronValues) => {
+const getRandomTimeOfWeek = (cronValues, daysAway) => {
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     const valNums = cronValues.split(' ').map(val => parseInt(val));
     const createDate = valNums[2];
     const createDay = valNums[4];
     const daysInMonth = days[valNums[3] - 1];
-    const daysFromSend = Math.floor(Math.random() * 7);
-
+    const daysFromSend = daysAway === 1 ? 1 : Math.ceil(Math.random() * daysAway);
 
     if ((createDate + daysFromSend) > daysInMonth) {
         valNums[2] = (createDate + daysFromSend) - daysInMonth;
