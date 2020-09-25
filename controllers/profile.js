@@ -50,9 +50,15 @@ router.put('/', async (req, res) => {
 });
 
 
+<<<<<<< HEAD
 
 
 
+=======
+
+
+
+>>>>>>> thunderhawk
 // Delete Route
 router.delete('/', async (req, res) => {
   try {
@@ -68,9 +74,16 @@ router.delete('/', async (req, res) => {
 });
 
 
+<<<<<<< HEAD
 
 
 
 // ANCHOR Exported Modules
 module.exports = router;
+=======
 
+
+>>>>>>> thunderhawk
+
+// ANCHOR Exported Modules
+module.exports = router;
