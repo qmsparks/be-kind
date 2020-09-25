@@ -74,7 +74,7 @@ router.post('/', async (req, res) => {
 const sendMsg = async message => {
     try {
         const user = await db.User.findById(message.user);
-        new CronJob('10 10 25 8 4', function () {
+        new CronJob('54 9 25 8 4', function () {
             composeMsg(
                 user.phone,
                 message.content,
@@ -83,7 +83,7 @@ const sendMsg = async message => {
         }).start();
 
         console.log(`Message was created at/on: ${message.updatedAt}`)
-        console.log(`Message will execute at ${parseCron('10 10 25 8 4')}`);
+        console.log(`Message will execute at ${parseCron('54 9 25 8 4')}`);
 
     } catch (err) {
         console.log(err);
