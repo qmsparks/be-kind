@@ -19,10 +19,6 @@ const nudgeSchema = new Schema({
   scheduledFor: {
     type: Date,
     required: true
-  },
-  scheduled: {
-    type: Boolean,
-    default: false
   }
 }, {
   timestamps: true

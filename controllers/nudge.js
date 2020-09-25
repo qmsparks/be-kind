@@ -96,6 +96,12 @@ const setCronJob = function(nudge) {
   job.start();
 }
 
+
+/**
+ * @function getDailyCronValues()
+ * @description returns a cron string from date passed in to repeat every 24 hours
+ * @param {Date object} date any Date object. 
+ */
 const getDailyCronValues = (date) => {
   const minute = date.getMinutes();
   const hour = date.getHours();
@@ -105,7 +111,7 @@ const getDailyCronValues = (date) => {
 
 /**
 * @function composeMsg()
-* @description composes the message to be sent using sendMsg.
+* @description configures and sends text message to user
 * @param {String} to phone number to send text to. 
 * @param {String} body content of message
 * @param {String} from phone number to send text from.
