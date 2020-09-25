@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require("dotenv").config()
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/be-kind';
 
 const DB_CONNECTED_MSG = `Connected to the Be-Kind database at ${connectionString}`;
