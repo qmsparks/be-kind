@@ -13,7 +13,7 @@ const controllers = require('./controllers');
 const app = express();
 
 // configuration
-const PORT = 3000;
+const PORT = process.env.MONGODB_URI || 3000;
 app.set('view engine', 'ejs');
 
 
