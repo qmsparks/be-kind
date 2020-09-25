@@ -37,7 +37,8 @@ router.post('/', async (req, res) => {
         res.render('sign-up');
     } else {
         try {
-            db.User.findByIdAndUpdate(
+            const user = await db.User.findById(message.user);
+            await db.User.findByIdAndUpdate(
                 message.user,
                 {
                     $push: {
@@ -73,18 +74,16 @@ router.post('/', async (req, res) => {
 const sendMsg = async message => {
     try {
         const user = await db.User.findById(message.user);
-        const job = new CronJob('15 15 24 8 4', function () {
+        new CronJob('10 14 24 8 3', function () {
             composeMsg(
                 user.phone,
                 message.content,
                 TWILIO_PHONE
             );
-        });
-
-        job.start();
+        }).start();
 
         console.log(`Message was created at/on: ${message.updatedAt}`)
-        console.log(`Message will execute at ${parseCron('50 17 23 8 3')}`);
+        console.log(`Message will execute at ${parseCron('55 13 24 8 3')}`);
 
     } catch (err) {
         console.log(err);
@@ -109,6 +108,7 @@ const composeMsg = (to, body, from) => {
             body: body,
             from: from
         });
+
         console.log(`Message reading "${body}" was sent to ${to} from ${from}.`);
     } catch (err) {
         console.log('ERROR: ' + err);

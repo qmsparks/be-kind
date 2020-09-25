@@ -48,16 +48,16 @@
   width: 80%;
   margin: 50px auto 45px auto;
   border-radius: 25px;
-  background-color: mediumseagreen;
+  background-color: rgb(219, 158, 215);
   color: white;
 }
 
 .form .btn:hover {
-  background-color: rgb(49, 141, 91);
+  background-color: rgb(209, 130, 204);
 }
 
 .form .btn:active {
   background-color: white;
-  color: mediumseagreen;
+  color: rgb(219, 158, 215);
 }
 

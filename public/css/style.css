@@ -60,7 +60,11 @@ textarea {
     color: white;
     font-family: 'Baloo Tammudu 2', cursive;
     text-align: center;
-    margin-top: 3%;
+    margin-top: 2%;
+}
+
+.leave {
+  text-align: center;
 }
 
 .fa-user-edit {
@@ -77,13 +81,18 @@ textarea {
   justify-content: center;
 }
 
+.modals .cta {
+  margin-top: 20px;
+  text-align: center;
+}
+
 
 /* NUDGEBOARD CSS */
 
 #calendar {
   /* font-family: 'Roboto', sans-serif; */
   max-height: 60vh;
-  margin: 0 0 20px;
+  margin: 20px 0px 20px;
 }
 
 /* Event slots */
