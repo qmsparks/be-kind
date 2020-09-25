@@ -1,0 +1,11 @@
+<div id="new-nudge" class="modal">
+  <div class="nudge-form">
+    <i class="fas fa-upload"></i>
+    <form name="add-nudge" action="/nudges" method="POST">
+      <input type="text" name="content" placeholder="A friendly nudge">
+      <input type="text" name="scheduledFor">
+      <input type="text" name="user" value="<%= user._id %>">
+    </form>
+  </div>
+  <i class="fas fa-window-close new"></i>
+</div>

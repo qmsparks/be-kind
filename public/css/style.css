@@ -1,0 +1,226 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  background-image: linear-gradient(to right, #80d0c7  0%, #13547a 100%);
+  background-color: rgba(0, 0, 0, .3);
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  width: 40%;
+  margin: 15px auto;
+}
+
+.btn {
+  width: fit-content;
+  padding: 5px 20px 0px 20px;
+  margin: 20px;
+  color: white;
+  font-size: 1.2rem;
+  font-family: 'Baloo Tammudu 2', cursive;
+  background-color: rgba(256, 256, 256, 0);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(256, 256, 256, 0.7);
+  transition: background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgba(256, 256, 256, 0.7);
+  color: rgb(22, 23, 24);
+}
+
+.btn:active {
+  background-color: rgba(256, 256, 256, 1);
+  border-color: rgba(256, 256, 256, 1);
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+textarea {
+    padding: 20px;
+    border: none;
+    width: 100%;
+    overflow: auto;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+}
+
+.page-heading {
+    color: white;
+    font-family: 'Baloo Tammudu 2', cursive;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.leave {
+  text-align: center;
+}
+
+.fa-user-edit {
+  margin: 0 5px 10px;
+  padding: 20px 0 0 ;
+}
+
+.fa-user-edit:hover {
+  cursor: pointer;
+}
+
+.heading-container{
+  display: flex;
+  justify-content: center;
+}
+
+.modals .cta {
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+/* NUDGEBOARD CSS */
+
+#calendar {
+  /* font-family: 'Roboto', sans-serif; */
+  max-height: 60vh;
+  margin: 20px 0px 20px;
+}
+
+/* Event slots */
+.fc .fc-timegrid-col.fc-day-today {
+  background-color: rgba(219, 158, 215, .2);
+}
+
+.fc-timegrid-slot:hover {
+  cursor: cell;
+}
+
+.fc-timegrid-event-harness:hover {
+  cursor: cell;
+}
+
+.fc-event-title {
+  text-align: right;
+}
+
+.fc-event:hover {
+  cursor: pointer;
+}
+
+.fc-timegrid-slot-label {
+  color: darkslateblue;
+}
+
+.fc-timegrid-slot-label:hover {
+  cursor: default;
+}
+
+
+
+/* Profile Modals */
+
+.modal {
+  margin: 3px 0;
+  display: none;
+  width: 100%;
+  justify-content: space-between;
+}
+
+#update-modal {
+  display: none;
+}
+
+#update-user {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  font-family: 'Roboto', sans-serif;
+}
+
+#update-user input:focus::placeholder {
+  color: transparent;
+}
+
+#update-user input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  /* font-size: 1.1em; */
+}
+
+#update-user input[name="name"] {
+  font-size: 1.3em;
+}
+
+.modal input {
+  font-size: 0.8em;
+  padding: 0 25px 0 5px;
+  color: #555;
+  border: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.modal input:focus {
+  outline: none;
+}
+
+form[name="delete-nudge"] {
+  display: none;
+}
+
+.fa-window-close{
+color: darkslateblue;
+align-self: center;
+}
+
+.fa-trash-alt {
+  color: darkslateblue;
+}
+
+.fa-pen-fancy {
+  color: darkslateblue;
+}
+
+.fa-upload {
+  color: darkslateblue;
+}
+
+.nudge-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nudge-form input:focus::placeholder {
+  color: transparent;
+}
+
+input[name="scheduledFor"] {
+  display: none;
+}
+
+input[name="user"] {
+  display: none;
+}
+
+#update-modal input {
+  padding: 0 15px 0 0;
+}
+
+.update {
+  width: 80%;
+  border-radius: 25px;
+  padding: 5px;
+  border: none;
+}

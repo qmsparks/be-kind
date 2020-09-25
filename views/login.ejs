@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/baseHead') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <%- include('./partials/form-nav')  %>
+    <div class="form-container">
+        <h2>Login</h2>
+        <form action="/login" class="form" method="POST">
+            <input class="field" type="email" name="email" placeholder="Email" required>
+            <input class="field" type="password" name="password" placeholder="Password" required>
+            <input type="submit" class="btn" value="Sign in">
+        </form>
+    </div>
+</body>
+
+</html>

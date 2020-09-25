@@ -1,0 +1,12 @@
+#about {
+    text-align: justify;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: .9rem;
+    font-weight: 300;
+}
+
+#about p {
+    margin-top: 20px;
+    line-height: 1.4rem;
+}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/baseHead') %>
+    <link rel="stylesheet" href="/css/home.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+    <div id="first-message">
+        <div>
+            <p id="question">
+            </p>
+        </div>
+        <form action="/messages" method="POST">
+            <textarea name="content" id="answer" cols="30" rows="5" maxlength="300" autofocus></textarea></br>
+            <div id="say-it">
+                <input type="submit" class="say-it" value="Say it">
+            </div>
+        </form>
+    </div>
+
+    <script src="/js/main.js" defer></script>
+</body>
+
+</html>
