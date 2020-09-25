@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./partials/baseHead') %>
+  <%- include('./partials/nudgeboard.ejs')  %>
+  <link rel="stylesheet" href="/css/profile.css">
+  <title>Profile</title>
+</head>
+
+<body>
+  <%- include('./partials/nav') %>
+  <div class="container">
+    <div class="heading-container">
+      <i class="fas fa-user-edit"></i>
+      <h1> <%= user.name %>'s Kind Board</h1>
+    </div>
+    <div class="modals">
+      <%- include('./partials/profile-modals/edit-profile')  %>
+      <%- include('./partials/messages') %>
+
+      <div id="nudgeboard-wrapper">
+        <%- include('./partials/profile-modals/new-nudge')  %>
+        <%- include('./partials/profile-modals/edit-nudge')  %>
+        <div id="calendar">
+        </div>
+      </div>
+      <%- include('./partials/profile-modals/delete-profile')  %>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
