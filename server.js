@@ -58,6 +58,10 @@ app.get('/contact', (req, res) => {
   });
 });
 
+app.get('/new-profile', (req, res) => {
+  res.render('profile-new');
+});
+
 app.get('/', (req, res) => {
   res.render('index', {
     user: req.session.currentUser

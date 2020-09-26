@@ -1,0 +1,17 @@
+.nudge {
+    display: flex;
+    flex-flow: row nowrap;
+    
+}
+
+.nudge .time {
+    margin-right: 20px;
+}
+
+.nudge .msg {
+    margin-right: 20px;
+}
+
+.nudge a {
+    margin-right: 20px;
+}
