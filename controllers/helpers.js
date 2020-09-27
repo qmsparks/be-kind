@@ -163,6 +163,24 @@ const setCronJob = function (nudge) {
 
 
 /**
+ * @function convertToDate()
+ * @description converts a simple time string to a date object.
+ * @param {String} timeString  
+ */
+const convertToDate = timeString => {
+    let hoursMinutes = timeString.split(':');
+    let hour = hoursMinutes[0];
+    let min = hoursMinutes[1];
+    let newDate = new Date();
+    newDate.setHours(hour)
+    newDate.setMinutes(min);
+    return newDate;
+}
+
+
+
+
+/**
  * @function getDailyCronValues()
  * @description converts date object into a daily CronString
  * @param {Date Object} date 
@@ -239,6 +257,7 @@ module.exports = {
     randomNumInRange: randomNumInRange,
     getCronValues: getCronValues,
     setCronJob: setCronJob,
+    convertToDate: convertToDate,
     getDailyCronValues: getDailyCronValues,
     getRandomTimeOfDay: getRandomTimeOfDay,
     getRandomTimeOfWeek: getRandomTimeOfWeek

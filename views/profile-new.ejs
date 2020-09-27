@@ -5,48 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/new-profile.css">
-    <title>Document</title>
+
+    <title>New Profile</title>
 </head>
 
 <body>
     <h1>Nudges</h1>
     <!-- One nudge is equal to -->
     <!-- time | message -->
+    <h2><%= user.name %>'s Nudgeboard</h2>
     <div class="nudges-table">
+        <% for( let i = 0; i < nudges.length; i++ ) { %>
         <div class="nudge">
             <div class="time">
-                8:00 AM
+                <%= nudges[i].scheduledFor.toLocaleTimeString("en-US-u-ca-gregory", { timeStyle: 'short' }) %>
             </div>
             <div class="msg">
-                Brush your teeth.
+                <%= nudges[i].content %>
             </div>
             <a href="#">edit</a>
             <a href="#">delete</a>
         </div>
-        <div class="nudge">
-            <div class="time">
-                8:00 AM
-            </div>
-            <div class="msg">
-                Brush your teeth.
-            </div>
-            <a href="#">edit</a>
-            <a href="#">delete</a>
-        </div>
-        <div class="nudge">
-            <div class="time">
-                8:00 AM
-            </div>
-            <div class="msg">
-                Brush your teeth.
-            </div>
-            <a href="#">edit</a>
-            <a href="#">delete</a>
-        </div>
-    </div>
-    <a href="#">Add A Nudge</a>
+        <% } %>
+        <button class="cta-btn" id="add-nudge">Add A Nudge</button>
 
-
+        <%- include('partials/profile-modals/create.ejs') %>
 
 </body>
 

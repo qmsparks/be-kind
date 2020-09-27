@@ -15,3 +15,10 @@
 .nudge a {
     margin-right: 20px;
 }
+
+.create-modal {
+    width: 500px;
+    height: 300px;
+    margin: 50px auto;
+    border: 1px solid black;
+}
