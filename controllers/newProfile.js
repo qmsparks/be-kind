@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
 
         const context = {
             user: currentUser,
-            nudges: userNudges
+            nudges: userNudges,
         }
         res.render('profile-new', context);
     } catch (error) {
@@ -58,9 +58,6 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/:id/edit', async (req, res) => {
-
-});
 
 // Delete Route
 router.delete('/:id', async (req, res) => {
