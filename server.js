@@ -69,6 +69,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', controllers.auth);
+app.use('/new-profile', controllers.newProfile);
 app.use('/messages', controllers.message);
 app.use('/nudges', controllers.nudge);
 app.use('/profile', controllers.profile);
