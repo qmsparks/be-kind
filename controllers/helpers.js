@@ -249,6 +249,38 @@ const getRandomTimeOfWeek = (cronValues, daysAway) => {
 
 
 
+const sortNudges = async (arr) => {
+    try {
+        for (let i = 0; i < arr.length - 1; i++) {
+            let nudge1 = await db.Nudge.findById(arr[i]);
+            let nudge2 = await db.Nudge.findById(arr[i + 1]);
+            let order = nudge2.scheduledFor - nudge1.scheduledFor;
+            console.log(order);
+            if (order > 0) {
+                arr.swap(i, i + 1);
+            }
+            console.log(arr);
+        }
+        return arr;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+
+
+
+Array.prototype.swap = function (x, y) {
+    var b = this[x];
+    this[x] = this[y];
+    this[y] = b;
+    return this;
+}
+
+
+
+
+
 // ANCHOR Exported Modules
 module.exports = {
     sendMsg: sendMsg,
@@ -260,5 +292,6 @@ module.exports = {
     convertToDate: convertToDate,
     getDailyCronValues: getDailyCronValues,
     getRandomTimeOfDay: getRandomTimeOfDay,
-    getRandomTimeOfWeek: getRandomTimeOfWeek
+    getRandomTimeOfWeek: getRandomTimeOfWeek,
+    sortNudges: sortNudges
 }

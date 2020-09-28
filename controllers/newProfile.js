@@ -14,7 +14,7 @@ const router = express.Router();
 
 
 // FIXME adds nudge to board but need to sort nudges so they appear in order
-// regardless of when they were created.
+// regardless of when they were created. This is harder than it seems.
 // nudge create route
 router.post('/', async (req, res) => {
     try {
@@ -27,6 +27,10 @@ router.post('/', async (req, res) => {
         const currentUser = await db.User.findById(createdNudge.user);
         currentUser.nudges.push(createdNudge._id);
         await currentUser.save();
+
+        let orderedNudges = helper.sortNudges(currentUser.nudges);
+        currentUser.nudges = orderedNudges;
+
         res.redirect('/new-profile');
     } catch (error) {
         console.log(error);
