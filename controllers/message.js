@@ -3,7 +3,8 @@
 const express = require('express');
 
 // Internal Modules
-const helper = require('./helpers');
+const helper = require('../utils/msg_helpers');
+const cron = require('../utils/cron_helpers')
 const db = require('../models');
 
 // Instanced Modules 
@@ -20,8 +21,8 @@ router.post('/', async (req, res) => {
     req.body.user = loggedIn ? req.session.currentUser.id : undefined;
 
     const message = await db.Message.create(req.body);
-    const createDate = helper.getCronValues(message.updatedAt);
-    const cronString = helper.getRandomTimeOfWeek(createDate, 1);
+    const createDate = cron.getCronValues(message.updatedAt);
+    const cronString = cron.getRandomTimeOfWeek(createDate, 1);
     message.cronString = cronString;
 
     if (!loggedIn) {
